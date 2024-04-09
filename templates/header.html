@@ -1,0 +1,112 @@
+{% load static bulma_tags %}
+<html lang="ES">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SafaEat</title>
+
+    {% block css %}
+        {% font_awesome %}
+        <link rel="stylesheet" href="{% static 'bulma/css/style.min.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+        {% block extra_css %}{% endblock extra_css %}
+
+    {% endblock css %}
+
+    <style>
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+
+        .navbar-menu {
+            display: flex;
+        }
+
+        .linea-azul {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #1f6278;
+            margin: 0 20px;
+        }
+
+        .image {
+            margin: 0 20px;
+        }
+    </style>
+
+
+</head>
+
+{% block header %}
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+
+
+        <div class="linea-azul"></div>
+
+
+        <div id="navbarBasicExample" class="navbar-menu">
+
+            <div class="navbar-end">
+
+                {% if user.is_authenticated %}
+                    <a class="navbar-item" >
+                        Home
+                    </a>
+                    <a class="navbar-item" >
+                        Catalog
+                    </a>
+                    <a class="navbar-item" >
+                        Employees
+                    </a>
+
+                {% else %}
+                    <a class="navbar-item" >
+                        Register
+                    </a>
+
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <figure class="image is-128x128">
+            <img class="imageis-rounded" src="/static/fotos/xtremesoft_logo.png">
+        </figure>
+
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                {% if user.is_authenticated %}
+                    <a class="navbar-item" >
+                        About Us
+                    </a>
+                    <a class="navbar-item" >
+                        Shops
+                    </a>
+                    <a class="navbar-item" >
+                        Logout
+                    </a>
+                {% else %}
+                    <a class="navbar-item" >
+                        Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="linea-azul"></div>
+
+    </nav>
+
+{% endblock header %}
+
+
+</html>
