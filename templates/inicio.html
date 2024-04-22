@@ -1,9 +1,70 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
 
-{% include "header.html"%}
+{% include 'barra_navegacion.html' %}
+
+    <h1>ESTAMOS HACIENDO UN CARRUSELL</h1>
+
+  <div class="carrusel">
+
+			<input type="radio" name="fancy" autofocus value="clubs" id="clubs" />
+			<input type="radio" name="fancy" value="hearts" id="hearts" />
+			<input type="radio" name="fancy" value="spades" id="spades" />
+			<input type="radio" name="fancy" value="diamonds" id="diamonds" />
+			<label for="clubs">&#9827; Clubs</label>
+      <label for="hearts">&#9829; Hearts</label>
+      <label for="spades">&#9824; Spades</label>
+      <label for="diamonds">&#9830; Diamonds</label>
+
+      <label for="hearts"></label>
+      <label for="spades"></label>
+      <label for="diamonds"></label>
 
 
-<p>hola buenas tardes</p>
+	</div>
+
+<div class="texto-inicio">
+    <article class="message is-success">
+  <div class="message-body">
+    En nuestros campos de tiro la acción táctica se encuentra con la belleza natural. Nos encontramos en la Sierra Norte de Sevilla,
+un paraje que cuenta con frondoso bosque que ofrece una experiencia única para los amantes del Airsoft que buscan aventuras emocionantes en un entorno impresionante.
+
+    Entorno Natural: Sumérgete en emocionantes batallas en medio de la exuberante vegetación, donde los árboles y la naturaleza son tus aliados y enemigos. El campo proporciona un escenario realista para tus estrategias tácticas.
+    Áreas de Descanso: Disfruta de zonas de descanso estratégicamente ubicadas para planificar tácticas, recargar energías y conectar con otros apasionados del Airsoft.
+
+No dudes en consultar nuestra sección de reservas, si quieres pasar un rato inolvidable
+  </div>
+</article>
+
+    <button class="button is-medium">Reservar campo</button>
+</div>
+
+<div class="texto-inicio">
+    <article class="message is-success">
+  <div class="message-body">
+    Para poder practicar Airsoft, es importante que cuentes con el equipamiento necesario. En XtremeSoft contamos con un equipo que prestamos a nuestros jugadores para
+
+las partidas, pero si quieres estar equipado como un profesional, en nuestra tienda está tu sitio. Allí encontrarás de todo: armas de todo tipo, lentes de protección, munición, ropa de camuflaje y un largo etcétera. ¡Vamos, anímate!
+  </div>
+</article>
+
+    <button class="button is-medium">Ver tienda</button>
+</div>
+
+<div class="texto-inicio">
+    <article class="message is-success">
+  <div class="message-body">
+  Ya sea que seas un novato o un veterano, nuestros eventos están diseñados para brindarte una experiencia inolvidable.
+      ¡Reúne a tus amigos, forma un equipo y prepárate para la batalla! ¿Estás listo para poner a prueba tus habilidades
+      y disfrutar de la emoción del airsoft? ¡Únete a nosotros en nuestros próximos eventos y sé parte de la acción!</div>
+</article>
+
+    <button class="button is-medium">Conoce nuestros eventos</button>
+</div>
 
 
 
-{% include "footer.html"%}
+
+
+{% include 'pie_pagina.html' %}

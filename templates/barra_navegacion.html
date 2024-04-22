@@ -1,0 +1,94 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SafaEat</title>
+    <link rel="stylesheet" href="/static/css/xtremesoft_estilos.css" >
+
+    {% block css %}
+        {% font_awesome %}
+        <link rel="stylesheet" href="{% static 'bulma/css/style.min.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+
+        {% block extra_css %}{% endblock extra_css %}
+
+    {% endblock css %}
+
+
+
+</head>
+
+{% block barra_navegacion %}
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="">
+      <img src="{%  static  'img/xtremesoft_logo.png' %}" width="640" height="160" viewBox="0 0 640 160" fill="none">
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'inicio' %}">
+        Inicio
+      </a>
+
+      <a class="navbar-item" href="{% url 'crear_producto' %}">
+        Crear Producto
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            About
+          </a>
+          <a class="navbar-item is-selected">
+            Jobs
+          </a>
+          <a class="navbar-item">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+{% endblock barra_navegacion %}
+
+
+</html>
+

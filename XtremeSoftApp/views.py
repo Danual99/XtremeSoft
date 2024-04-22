@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def go_home (request):
     return render(request,'inicio.html')
+
+def crear_producto (request):
+    return render(request,'crear_producto.html')
