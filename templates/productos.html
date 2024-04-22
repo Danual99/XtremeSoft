@@ -4,6 +4,39 @@
 
 {% include 'barra_navegacion.html' %}
 
-<button class="button is-normal button is-info">Nuevo producto</button>
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Nuestros productos</p>
+</div>
+
+ <div class="column is-one-third">
+
+<div class="card" style="min-height: 225px">
+  <div class="card-content">
+
+    <div class="content">
+        <figure class="image is-128x128">
+            <img src="https://bulma.io/assets/images/placeholders/1280x960.png"/>
+        </figure>
+
+        <div class="media-content">
+            <div class="producto-nombre title is-4" >Nombre del producto</div>
+            <div class="producto-descripcion subtitle is-6">Descripción del producto</div>
+            <div class="producto-precio subtitle is-6" >Precio del producto</div>
+        </div>
+  </div>
+
+    <footer class="card-footer">
+        <a href="#" class="card-footer-item">Save</a>
+        <a href="#" class="card-footer-item">Edit</a>
+        <a href="#" class="card-footer-item">Delete</a>
+    </footer>
+        </div>
+    </div>
+</div>
+<a>
+<button class="button is-normal button is-info" href="{% url 'crear_producto' %}">
+    Nuevo producto
+</button>
+</a>
 
 {% include 'pie_pagina.html' %}

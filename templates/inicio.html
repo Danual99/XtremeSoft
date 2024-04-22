@@ -6,23 +6,17 @@
 
     <h1>ESTAMOS HACIENDO UN CARRUSELL</h1>
 
-  <div class="carrusel">
 
-			<input type="radio" name="fancy" autofocus value="clubs" id="clubs" />
-			<input type="radio" name="fancy" value="hearts" id="hearts" />
-			<input type="radio" name="fancy" value="spades" id="spades" />
-			<input type="radio" name="fancy" value="diamonds" id="diamonds" />
-			<label for="clubs">&#9827; Clubs</label>
-      <label for="hearts">&#9829; Hearts</label>
-      <label for="spades">&#9824; Spades</label>
-      <label for="diamonds">&#9830; Diamonds</label>
-
-      <label for="hearts"></label>
-      <label for="spades"></label>
-      <label for="diamonds"></label>
+<div class="pic-ctn">
+    <img src="/static/img/carrusel-1.jpg" alt="" class="pic">
+    <img src="/static/img/carrusel-2.jpg" alt="" class="pic">
+    <img src="/static/img/carrusel-3.jpg" alt="" class="pic">
+    <img src="/static/img/carrusel-4.jpg" alt="" class="pic">
+    <img src="/static/img/carrusel-1.jpg" alt="" class="pic">
+  </div>
 
 
-	</div>
+
 
 <div class="texto-inicio">
     <article class="message is-success">
@@ -64,7 +58,18 @@ las partidas, pero si quieres estar equipado como un profesional, en nuestra tie
 </div>
 
 
+<script src="script.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
+
+<script>
+        bulmaCarousel.attach('#slider', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            infinite: true,
+            autoplay: true,
+        });
+    </script>
 
 
 {% include 'pie_pagina.html' %}

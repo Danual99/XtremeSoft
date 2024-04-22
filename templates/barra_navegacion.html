@@ -13,6 +13,9 @@
         {% font_awesome %}
         <link rel="stylesheet" href="{% static 'bulma/css/style.min.css' %}">
         <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
 
         {% block extra_css %}{% endblock extra_css %}
 
@@ -44,8 +47,8 @@
         Inicio
       </a>
 
-      <a class="navbar-item" href="{% url 'crear_producto' %}">
-        Crear Producto
+      <a class="navbar-item">
+        Menu
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
@@ -54,8 +57,8 @@
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
+          <a class="navbar-item" href="{% url 'mostrar_productos' %}">
+            Productos
           </a>
           <a class="navbar-item is-selected">
             Jobs
