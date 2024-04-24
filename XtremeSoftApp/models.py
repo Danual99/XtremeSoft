@@ -28,7 +28,7 @@ class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=250)
     descripcion = models.CharField(max_length=250)
-    precio = models.IntegerField()
+    precio = models.FloatField()
     foto = models.CharField(max_length=1000, default="")
 
     def __str__(self):

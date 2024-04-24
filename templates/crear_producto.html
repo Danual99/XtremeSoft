@@ -10,55 +10,54 @@
 
 <div class="columns is-mobile is-centered">
     <div class="column is-half">
-<form action="" method="post">
-     {% csrf_token %}
+        <form action="" method="post">
+            {% csrf_token %}
 
-    <div class="columns is-multiline is-mobile">
-                    <div class="column is-one-quarter has-text-centered">
-                        <label for="name" class="subtitle is-5"> Nombre</label>
-                    </div>
-                    <div class="column">
-                        <input id="name" name="name" type="text" class="input" placeholder="">
-                    </div>
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="name" class="subtitle is-5"> Nombre</label>
                 </div>
-
-                <div class="columns is-multiline is-mobile">
-                    <div class="column is-one-quarter has-text-centered">
-                        <label for="descripcion" class="form-label">Descripción</label>
-
-                    </div>
-                    <div class="column">
-                        <textarea class="textarea" name="descripcion"  placeholder="Enter your message"></textarea>
-                    </div>
+                <div class="column">
+                    <input id="name" value="{{ producto.nombre }}" name="name" type="text" class="input" placeholder="">
                 </div>
+            </div>
 
-
-                <div class="columns is-multiline is-mobile">
-                    <div class="column is-one-quarter has-text-centered">
-                        <label for="price" class="subtitle is-5"> Precio</label>
-                    </div>
-                    <div class="column">
-                        <input id="price" name="price" type="number" step="0.1" class="input" placeholder="">
-                    </div>
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="descripcion" class="subtitle is-5">Descripción</label>
                 </div>
-
-                <div class="columns is-multiline is-mobile">
-                    <div class="column is-one-quarter has-text-centered">
-                        <label for="image" class="subtitle is-5"> Image url</label>
-                    </div>
-                    <div class="column">
-                        <input id="image" name="image" type="text" class="input" placeholder="">
-                    </div>
+                <div class="column">
+                    <textarea class="textarea" type="input" name="descripcion" placeholder="Enter your message">{{ producto.descripcion }}</textarea>
                 </div>
+            </div>
 
-                <div class="columns is-mobile is-centered">
-                    <input class="button is-info is-light" type="submit">
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="price" class="subtitle is-5"> Precio</label>
                 </div>
+                <div class="column">
+                    <input id="price" value="{{ producto.precio}}"  name="price" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="image" class="subtitle is-5"> Image url</label>
+                </div>
+                <div class="column">
+                    <input id="image" value="{{ producto.foto }}" name="image" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-mobile is-centered">
+                <input class="button is-info is-light" type="submit">
+            </div>
 
 
-</form>
+        </form>
     </div>
-    </div>
+</div>
 
 
 {% include 'pie_pagina.html' %}

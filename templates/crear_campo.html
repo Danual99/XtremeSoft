@@ -4,4 +4,51 @@
 
 {% include 'barra_navegacion.html' %}
 
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Crear campo de tiro</p>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="nombre_campo" class="subtitle is-5"> Nombre</label>
+                </div>
+                <div class="column">
+                    <input id="nombre_campo"  name="name" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="aforo" class="subtitle is-5"> Aforo</label>
+                </div>
+                <div class="column">
+                    <input id="aforo"   name="aforo" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="localizacion" class="subtitle is-5"> Localización</label>
+                </div>
+                <div class="column">
+                    <input id="localizacion"  name="localizacion" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-mobile is-centered">
+                <input class="button is-info is-light" type="submit">
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
 {% include 'pie_pagina.html' %}
