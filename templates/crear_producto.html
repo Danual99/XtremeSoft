@@ -10,7 +10,8 @@
 
 <div class="columns is-mobile is-centered">
     <div class="column is-half">
-<form action="nuevo_producto/" method="post">
+<form action="" method="post">
+     {% csrf_token %}
 
     <div class="columns is-multiline is-mobile">
                     <div class="column is-one-quarter has-text-centered">
@@ -50,7 +51,7 @@
                     </div>
                 </div>
 
-<div class="columns is-mobile is-centered">
+                <div class="columns is-mobile is-centered">
                     <input class="button is-info is-light" type="submit">
                 </div>
 

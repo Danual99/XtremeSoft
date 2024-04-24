@@ -7,12 +7,13 @@ def go_home (request):
     return render(request,'inicio.html')
 
 def mostrar_productos(request):
-    return render(request, "productos.html")
+    lista_productos = Producto.objects.all()
+    return render(request, "productos.html",  {'productos': lista_productos})
 
 def crear_producto (request):
-    if request.method=="GET":
+    if request.method=='GET':
         lista_productos=Producto.objects.all()
-        return render(request,'productos.html', {'productos':lista_productos})
+        return render(request,'crear_producto.html', {'productos': lista_productos})
     else:
         nuevo_producto = Producto()
         nuevo_producto.nombre=request.POST.get("name")
@@ -21,5 +22,9 @@ def crear_producto (request):
         nuevo_producto.foto = request.POST.get("image")
         nuevo_producto.save()
         return redirect("/lista_productos")
+
+
+
+
 
 
