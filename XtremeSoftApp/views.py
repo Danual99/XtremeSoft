@@ -12,8 +12,8 @@ def mostrar_productos(request):
 
 def crear_producto (request):
     if request.method=='GET':
-        lista_campos=Campo_Tiro.objects.all()
-        return render(request,'crear_campo.html', {'campos': lista_campos})
+        lista_productos=Producto.objects.all()
+        return render(request,'crear_producto.html', {'campos': lista_productos})
     else:
         nuevo_producto = Producto()
         nuevo_producto.nombre=request.POST.get("name")
@@ -46,9 +46,9 @@ def eliminar_producto(request, id):
         return redirect('/lista_productos')
 
 
-# def mostrar_productos(request):
-#     lista_productos = Producto.objects.all()
-#     return render(request, "productos.html",  {'productos': lista_productos})
+def mostrar_campos(request):
+    lista_campos = Producto.objects.all()
+    return render(request, "campos.html",  {'campos': lista_campos})
 #
 # def crear_producto (request):
 #     if request.method=='GET':
