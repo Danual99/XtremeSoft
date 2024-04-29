@@ -4,4 +4,87 @@
 
 {% include 'barra_navegacion.html' %}
 
+<div class="column is-half">
+    <div class="columns is-mobile is-centered">
+        <p class="title is-2">Registro</p>
+    </div>
+
+    <div class="columns is-mobile is-centered">
+        <div class="column is-three-quarters">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="columns is-multiline is-mobile">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="columns is-multiline is-mobile">
+
+                    <label class="label" for="username">User name</label>
+                      <div class="control has-icons-left has-icons-right">
+                    <div class="control">
+                         <span class="icon is-small is-left">
+                          <i class="fas fa-user"></i>
+                      </span>
+                        <input class="input" type="text" placeholder="Text input" name="username">
+                    </div>
+                      </div>
+                </div>
+
+                <div class="columns is-multiline is-mobile">
+                    <label class="label" for="email">Email</label>
+                     <div class="control has-icons-left has-icons-right">
+                    <div class="control">
+                        <input class="input" type="email" placeholder="Text input" name="email">
+                    </div>
+                     <span class="icon is-small is-left">
+                         <i class="fas fa-envelope"></i>
+                     </span>
+                </div>
+                </div>
+
+                <div class="columns is-multiline is-mobile">
+                    <label class="label" for="password">Password</label>
+                     <div class="control has-icons-left has-icons-right">
+                    <div class="control">
+                        <input class="input" type="password" placeholder="Text input" name="password">
+                    </div>
+                      <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                      </span>
+                </div>
+                </div>
+
+                <div class="columns is-multiline is-mobile">
+                    <label class="label" for="repeat_password">Repeat password</label>
+                     <div class="control has-icons-left has-icons-right">
+                    <div class="control">
+                        <input class="input" type="password" placeholder="Text input" name="repeat_password">
+                    </div>
+                      <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                         </span>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="control">
+        <button class="button is-link" type="submit">Submit</button>
+    </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+{% for error in errores %}
+
+        <p style="color:red">{error}</p>
+
+    {% endfor %}
+</div>
 {% include 'pie_pagina.html' %}

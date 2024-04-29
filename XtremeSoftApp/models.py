@@ -1,18 +1,48 @@
 from django.db import models
-
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
 
 #Aqui vamos a crear clases como tablas de base de datos, todas ellas extienden models.model
 
-
-class Usuario(models.Model):
+class Rol(models.TextChoices):
+    ADMIN = "ADMIN", "Administrador"
+    CUSTOMER = "CUST", "Cliente"
+    EMPLOYEE = "EMP", "Empleado"
+class Usuario(AbstractBaseUser):
     email = models.EmailField(max_length=255,unique=True)
     username = models.CharField(unique=True, max_length=255, blank=False)
-    password = models.CharField(max_length=255, blank=False)
+    rol = models.CharField(max_length=15, choices=Rol.choices, default=Rol.CUSTOMER)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['email', "rol"]
     def __str__(self):
         return self.username, self.email
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("El campo email es obligatorio")
+
+        email = self.normalize_email(email)
+        user = self.model(email = email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_satff') is not True:
+            raise ValueError("Error. El campo is_saff debe ser True")
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError("Error. El campo is_superuser debe ser True")
+
+        return self.create_user(email, password, **extra_fields)
 
 
 class Pedido(models.Model):
