@@ -1,0 +1,63 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Crear Campo de Tiro</p>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="name" class="subtitle is-5"> Nombre</label>
+                </div>
+                <div class="column">
+                    <input id="name" value="{{ campos.nombre }}" name="name" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="aforo" class="subtitle is-5"> Aforo</label>
+                </div>
+                <div class="column">
+                    <input id="aforo" value="{{ campos.aforo}}"  step="0.01" name="aforo" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="price" class="subtitle is-5"> Precio</label>
+                </div>
+                <div class="column">
+                    <input id="price" value="{{ campos.precio}}"  step="0.01" name="price" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="image" class="subtitle is-5"> Image url</label>
+                </div>
+                <div class="column">
+                    <input id="image" value="{{ campos.foto }}" name="image" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-mobile is-centered">
+                <input class="button is-info is-light" type="submit">
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+{% include 'pie_pagina.html' %}

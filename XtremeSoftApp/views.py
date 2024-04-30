@@ -14,7 +14,7 @@ def mostrar_productos(request):
 def crear_producto (request):
     if request.method=='GET':
         lista_productos=Producto.objects.all()
-        return render(request,'crear_producto.html', {'campos': lista_productos})
+        return render(request,'crear_producto.html', {'productos': lista_productos})
     else:
         nuevo_producto = Producto()
         nuevo_producto.nombre=request.POST.get("name")
@@ -48,8 +48,21 @@ def eliminar_producto(request, id):
 
 
 def mostrar_campos(request):
-    lista_campos = Producto.objects.all()
+    lista_campos = Campo_Tiro.objects.all()
     return render(request, "campos.html",  {'campos': lista_campos})
+
+def crear_campo (request):
+    if request.method=='GET':
+        lista_campos = Campo_Tiro.objects.all()
+        return render(request,'crear_campo_tiro.html', {'campos': lista_campos})
+    else:
+        nuevo_campo = Campo_Tiro()
+        nuevo_campo.nombre=request.POST.get("name")
+        nuevo_campo.aforo = request.POST.get("aforo")
+        nuevo_campo.localizacion = float(request.POST.get("price"))
+        nuevo_campo.foto = request.POST.get("image")
+        nuevo_campo.save()
+        return redirect("/lista_productos")
 
 
 def registro_usuario(request):

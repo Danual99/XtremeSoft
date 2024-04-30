@@ -10,9 +10,15 @@
 
 {% for prod in productos %}
 
-    <div class="column is-one-third">
+    {% if forloop.counter0|divisibleby:3 %}
+        {% if not forloop.first %}
+            </div> <!-- Cerrar el contenedor columns si no es el primer elemento -->
+        {% endif %}
+        <div class="columns"> <!-- Abrir un nuevo contenedor columns cada 3 elementos -->
+    {% endif %}
 
-        <div class="card" style="min-height: 225px">
+    <div class="column is-one-third-desktop">
+        <div class="card" >
             <div class="card-content">
 
                 <div class="content">
@@ -27,14 +33,20 @@
                     </dhiv>
                 </div>
 
-                <footer class="card-footer">
+                <div class="card-footer">
                     <a href="{% url 'editar_producto' id=prod.id %}" class="card-footer-item" >Editar</a>
                     <a href="{% url 'eliminar_producto'  id=prod.id%}" class="card-footer-item">Eliminar</a>
-                </footer>
+                </div>
             </div>
         </div>
     </div>
+
+    {% if forloop.last %}
+        </div> <!-- Asegurarse de cerrar el contenedor columns al final -->
+    {% endif %}
 {% endfor %}
+
+
 <a href="{% url 'crear_producto' %}">
     <button class="button is-normal button is-info">
         Nuevo producto
