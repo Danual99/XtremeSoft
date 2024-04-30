@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from .models import *
@@ -100,3 +100,7 @@ def do_login(request):
             return render(request, 'inicio_sesion.html', {"error": "No ha sido posible iniciar sesión"})
 
     return render(request, "inicio_sesion.html")
+
+def do_logout(request):
+    logout(request)
+    return redirect('inicio')

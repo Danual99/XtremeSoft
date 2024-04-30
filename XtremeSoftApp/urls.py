@@ -9,7 +9,8 @@ urlpatterns = [
     path('productos/eliminar/<int:id>', eliminar_producto, name='eliminar_producto'),
     path('lista_campos/', mostrar_campos, name='mostrar_campos'),
     path('usuario/registro/', registro_usuario, name='registro_usuario'),
-    path('usuario/login', do_login, name='do_login')
+    path('usuario/login', do_login, name='do_login'),
+    path('logout/', do_logout, name='do_logout')
 
 
 ]
