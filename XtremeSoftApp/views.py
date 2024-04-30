@@ -57,12 +57,33 @@ def crear_campo (request):
         return render(request,'crear_campo_tiro.html', {'campos': lista_campos})
     else:
         nuevo_campo = Campo_Tiro()
-        nuevo_campo.nombre=request.POST.get("name")
-        nuevo_campo.aforo = request.POST.get("aforo")
-        nuevo_campo.localizacion = float(request.POST.get("price"))
-        nuevo_campo.foto = request.POST.get("image")
+        nuevo_campo.nombre = request.POST.get("nombre")
+        nuevo_campo.aforo = int(request.POST.get("aforo"))
+        nuevo_campo.localizacion = request.POST.get("localizacion")
+        # nuevo_campo.foto = request.POST.get("image")
         nuevo_campo.save()
-        return redirect("/lista_productos")
+        return redirect("/lista_campos")
+
+def editar_campo (request,id):
+    if request.method == 'GET':
+        campos = Campo_Tiro.objects.get(id=id)
+        return render(request, 'crear_campo_tiro.html', {'campos': campos})
+    else:
+        campos = Campo_Tiro()
+        campos.id = id
+        campos.nombre = request.POST.get("nombre")
+        campos.aforo = int(request.POST.get("aforo"))
+        campos.localizacion = request.POST.get("localizacion")
+        # campo.foto = request.POST.get("image")
+        Campo_Tiro.save(campos)
+        return redirect('/lista_campos')
+
+def eliminar_campo(request, id):
+    campo = Campo_Tiro.objects.get(id=id)
+    if campo is not None:
+        Campo_Tiro.delete(campo)
+        return redirect('/lista_campos')
+
 
 
 def registro_usuario(request):

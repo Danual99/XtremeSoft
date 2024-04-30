@@ -9,7 +9,9 @@ urlpatterns = [
     path('productos/eliminar/<int:id>', eliminar_producto, name='eliminar_producto'),
     path('lista_campos/', mostrar_campos, name='mostrar_campos'),
     path('usuario/registro/', registro_usuario, name='registro_usuario'),
-    path('nuevo_campo_de_tiro/', crear_campo, name='crear_campo_de_tiro')
+    path('nuevo_campo_de_tiro/', crear_campo, name='crear_campo_de_tiro'),
+    path('nuevo_campo_de_tiro/editar/<int:id>', editar_campo, name='editar_campo_de_tiro'),
+    path('nuevo_campo_de_tiro/eliminar/<int:id>', eliminar_campo, name='eliminar_campo_de_tiro'),
 
 
 ]
