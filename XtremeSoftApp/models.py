@@ -1,3 +1,4 @@
+from django.contrib.auth.models import UserManager
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
@@ -9,15 +10,20 @@ class Rol(models.TextChoices):
     ADMIN = "ADMIN", "Administrador"
     CUSTOMER = "CUST", "Cliente"
     EMPLOYEE = "EMP", "Empleado"
+
+
+
 class Usuario(AbstractBaseUser):
     email = models.EmailField(max_length=255,unique=True)
-    username = models.CharField(unique=True, max_length=255, blank=False)
+    username = models.CharField(unique=True, max_length=255)
     rol = models.CharField(max_length=15, choices=Rol.choices, default=Rol.CUSTOMER)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
+    objects = UserManager()
+
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', "rol"]
+    REQUIRED_FIELDS = ['mail', "rol"]
     def __str__(self):
         return self.username, self.email
 
@@ -28,7 +34,7 @@ class UserManager(BaseUserManager):
             raise ValueError("El campo email es obligatorio")
 
         email = self.normalize_email(email)
-        user = self.model(email = email, **extra_fields)
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -37,8 +43,8 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
-        if extra_fields.get('is_satff') is not True:
-            raise ValueError("Error. El campo is_saff debe ser True")
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError("Error. El campo is_staff debe ser True")
         if extra_fields.get('is_superuser') is not True:
             raise ValueError("Error. El campo is_superuser debe ser True")
 

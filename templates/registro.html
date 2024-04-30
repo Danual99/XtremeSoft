@@ -29,7 +29,7 @@
                          <span class="icon is-small is-left">
                           <i class="fas fa-user"></i>
                       </span>
-                        <input class="input" type="text" placeholder="Text input" name="username">
+                        <input class="input" type="text" placeholder="Text input" name="username" value="{{ username }}">
                     </div>
                       </div>
                 </div>
@@ -38,7 +38,7 @@
                     <label class="label" for="email">Email</label>
                      <div class="control has-icons-left has-icons-right">
                     <div class="control">
-                        <input class="input" type="email" placeholder="Text input" name="email">
+                        <input class="input" type="email" placeholder="Text input" name="email" value="{{ email }}">
                     </div>
                      <span class="icon is-small is-left">
                          <i class="fas fa-envelope"></i>
@@ -69,21 +69,22 @@
                          </span>
                 </div>
                 </div>
+                <div class="columns is-mobile is-centered">
+    <div class="control">
+       <input class="button is-link" type="submit" value="Submit" >
+    </div>
+</div>
             </form>
         </div>
     </div>
 </div>
 
-<div class="columns is-mobile is-centered">
-    <div class="control">
-        <button class="button is-link" type="submit">Submit</button>
-    </div>
-</div>
+
 
 <div class="columns is-mobile is-centered">
-{% for error in errores %}
+{% for e in errores %}
 
-        <p style="color:red">{error}</p>
+        <p style="color:red">{{ e }}</p>
 
     {% endfor %}
 </div>

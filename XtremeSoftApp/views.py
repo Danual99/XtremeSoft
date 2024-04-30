@@ -1,10 +1,11 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from .models import *
 
 # Create your views here.
 
-def go_home (request):
+def inicio (request):
     return render(request,'inicio.html')
 
 def mostrar_productos(request):
@@ -51,6 +52,9 @@ def mostrar_campos(request):
     lista_campos = Producto.objects.all()
     return render(request, "campos.html",  {'campos': lista_campos})
 
+def mostrar_registro(request):
+    return render(request, 'registro.html')
+
 
 def registro_usuario(request):
     if request.method == 'GET':
@@ -59,23 +63,40 @@ def registro_usuario(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        repeat_password = request.POST.get('password_repeat')
+        repeat_password = request.POST.get('repeat_password')
 
         errors = []
-        if password == repeat_password:
+        if password != repeat_password:
             errors.append("Las contraseñas no coinciden")
 
         existe_usuario =Usuario.objects.filter(username=username).exists()
         if existe_usuario:
             errors.append("Ya existe un usuario con ese nombre")
 
-        existe_email = Usuario.objects.filter(password=password).exists()
-        errors.append("Ya existe un usuario con ese email")
+        existe_email = Usuario.objects.filter(email=email).exists()
+
+        if existe_email:
+            errors.append("Ya existe un usuario con ese email")
 
         if len(errors) != 0:
             return render(request, 'registro.html', {"errores":errors, "username": username, "email":email})
         else:
             user = Usuario.objects.create(username=username, password=make_password(password), email=email)
             user.save()
-            return redirect('inicio.html')
+            return redirect('do_login')
 
+
+def do_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('inicio')
+        else:
+            return render(request, 'inicio_sesion.html', {"error": "No ha sido posible iniciar sesión"})
+
+    return render(request, "inicio_sesion.html")
