@@ -1,7 +1,7 @@
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from .models import *
+from  django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -15,7 +15,7 @@ def mostrar_productos(request):
 def crear_producto (request):
     if request.method=='GET':
         lista_productos=Producto.objects.all()
-        return render(request,'crear_producto.html', {'campos': lista_productos})
+        return render(request,'crear_producto.html', {'productos': lista_productos})
     else:
         nuevo_producto = Producto()
         nuevo_producto.nombre=request.POST.get("name")
@@ -49,11 +49,45 @@ def eliminar_producto(request, id):
 
 
 def mostrar_campos(request):
-    lista_campos = Producto.objects.all()
+    lista_campos = Campo_Tiro.objects.all()
     return render(request, "campos.html",  {'campos': lista_campos})
 
 def mostrar_registro(request):
     return render(request, 'registro.html')
+
+def crear_campo (request):
+    if request.method=='GET':
+        lista_campos = Campo_Tiro.objects.all()
+        return render(request,'crear_campo_tiro.html', {'campos': lista_campos})
+    else:
+        nuevo_campo = Campo_Tiro()
+        nuevo_campo.nombre = request.POST.get("nombre")
+        nuevo_campo.aforo = int(request.POST.get("aforo"))
+        nuevo_campo.localizacion = request.POST.get("localizacion")
+        # nuevo_campo.foto = request.POST.get("image")
+        nuevo_campo.save()
+        return redirect("/lista_campos")
+
+def editar_campo (request,id):
+    if request.method == 'GET':
+        campos = Campo_Tiro.objects.get(id=id)
+        return render(request, 'crear_campo_tiro.html', {'campos': campos})
+    else:
+        campos = Campo_Tiro()
+        campos.id = id
+        campos.nombre = request.POST.get("nombre")
+        campos.aforo = int(request.POST.get("aforo"))
+        campos.localizacion = request.POST.get("localizacion")
+        # campo.foto = request.POST.get("image")
+        Campo_Tiro.save(campos)
+        return redirect('/lista_campos')
+
+def eliminar_campo(request, id):
+    campo = Campo_Tiro.objects.get(id=id)
+    if campo is not None:
+        Campo_Tiro.delete(campo)
+        return redirect('/lista_campos')
+
 
 
 def registro_usuario(request):

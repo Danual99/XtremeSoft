@@ -84,6 +84,7 @@ class ItemsPedido(models.Model):
 
 class Campo_Tiro(models.Model):
     id = models.AutoField(primary_key=True)
+    #foto = models.CharField(max_length=1000, default="")
     aforo = models.IntegerField(null= False)
     nombre = models.CharField(max_length=200)
     localizacion = models.CharField(max_length=300)
