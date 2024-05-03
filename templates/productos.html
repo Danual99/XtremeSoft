@@ -34,8 +34,13 @@
                 </div>
 
                 <div class="card-footer">
+                     {% if user.is_authenticated %}
                     <a href="{% url 'editar_producto' id=prod.id %}" class="card-footer-item" >Editar</a>
                     <a href="{% url 'eliminar_producto'  id=prod.id%}" class="card-footer-item">Eliminar</a>
+                    {% endif %}
+                    <a class="card-footer-item"><span class="icon is-small is-left">
+                        <i class="fa fa-border fa-shopping-cart"  style="margin-right: 20px"></i>
+                      </span>Añadir al carrito</a>
                 </div>
             </div>
         </div>

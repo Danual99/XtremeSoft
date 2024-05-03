@@ -4,78 +4,74 @@
 
 {% include 'barra_navegacion.html' %}
 
-<h1>ESTAMOS HACIENDO UN CARRUSELL</h1>
+{#<h1>BIENVENIDOS A XTREMESOFT</h1>#}
 
+<div class="body">
 
-<div class="pic-ctn">
-    <img src="/static/img/carrusel-1.jpg" alt="" class="pic">
-    <img src="/static/img/carrusel-2.jpg" alt="" class="pic">
-    <img src="/static/img/carrusel-3.jpg" alt="" class="pic">
-    <img src="/static/img/carrusel-4.jpg" alt="" class="pic">
-    <img src="/static/img/carrusel-1.jpg" alt="" class="pic">
-</div>
+      <div class="pic-ctn">
+        <img src="/static/img/carrusel-1.jpg" alt="" class="pic">
+        <img src="/static/img/carrusel-2.jpg" alt="" class="pic">
+        <img src="/static/img/carrusel-3.jpg" alt="" class="pic">
+        <img src="/static/img/carrusel-4.jpg" alt="" class="pic">
+        <img src="/static/img/carrusel-1.jpg" alt="" class="pic">
+    </div>
 
+    <div class="paneles">
+        <div class="info-panel">
+            <h2 class="panel-title">Campos de tiro</h2>
+            <p class="panel-text">En nuestros campos de tiro la acción táctica se encuentra con la belleza natural. Nos
+                encontramos en la
+                Sierra Norte de Sevilla,
+                un paraje que cuenta con frondoso bosque que ofrece una experiencia única para los amantes del Airsoft
+                que
+                buscan aventuras emocionantes en un entorno impresionante.
 
-<div class="texto-inicio">
-    <article class="message is-success">
-        <h1>Campos de tiro</h1>
-        <div class="message-body">
-            En nuestros campos de tiro la acción táctica se encuentra con la belleza natural. Nos encontramos en la
-            Sierra Norte de Sevilla,
-            un paraje que cuenta con frondoso bosque que ofrece una experiencia única para los amantes del Airsoft que
-            buscan aventuras emocionantes en un entorno impresionante.
+                Entorno Natural: Sumérgete en emocionantes batallas en medio de la exuberante vegetación, donde los
+                árboles
+                y la naturaleza son tus aliados y enemigos. El campo proporciona un escenario realista para tus
+                estrategias
+                tácticas.
+                Áreas de Descanso: Disfruta de zonas de descanso estratégicamente ubicadas para planificar tácticas,
+                recargar energías y conectar con otros apasionados del Airsoft.
 
-            Entorno Natural: Sumérgete en emocionantes batallas en medio de la exuberante vegetación, donde los árboles
-            y la naturaleza son tus aliados y enemigos. El campo proporciona un escenario realista para tus estrategias
-            tácticas.
-            Áreas de Descanso: Disfruta de zonas de descanso estratégicamente ubicadas para planificar tácticas,
-            recargar energías y conectar con otros apasionados del Airsoft.
-
-            No dudes en consultar nuestra sección de reservas, si quieres pasar un rato inolvidable
+                No dudes en consultar nuestra sección de reservas, si quieres pasar un rato inolvidable.</p>
+            <a href="{% url 'mostrar_campos' %}">
+                <button class="panel-button">Reservar campo</button>
+            </a>
         </div>
-        <a href="{% url 'mostrar_campos' %}">
-            <button class="button is-medium">Reservar campo</button>
-        </a>
-    </article>
 
-</div>
 
-<div class="texto-inicio">
-    <article class="message is-success">
-        <h1>El mejor equipamiento</h1>
-        <div class="message-body">
-            Para poder practicar Airsoft, es importante que cuentes con el equipamiento necesario. En XtremeSoft
-            contamos con un equipo que prestamos a nuestros jugadores para
 
-            las partidas, pero si quieres estar equipado como un profesional, en nuestra tienda está tu sitio. Allí
-            encontrarás de todo: armas de todo tipo, lentes de protección, munición, ropa de camuflaje y un largo
-            etcétera. ¡Vamos, anímate!
+        <div class="info-panel">
+            <h2 class="panel-title">El mejor equipamiento</h2>
+            <p class="panel-text">Para poder practicar Airsoft, es importante que cuentes con el equipamiento necesario.
+                En XtremeSoft
+                contamos con un equipo que prestamos a nuestros jugadores para
+                las partidas, pero si quieres estar equipado como un profesional, en nuestra tienda está tu sitio. Allí
+                encontrarás de todo: armas de todo tipo, lentes de protección, munición, ropa de camuflaje y un largo
+                etcétera. ¡Vamos, anímate!.</p>
+            <a href="{% url 'mostrar_productos' %}">
+                <button class="panel-button">Ver tienda</button>
+            </a>
         </div>
-        <a href="{% url 'mostrar_productos' %}">
-            <button class="button is-medium">Ver tienda</button>
-        </a>
-    </article>
-
-</div>
-
-<div class="texto-inicio">
-    <article class="message is-success">
-        <h1>Participa en nuestros eventos</h1>
-        <div class="message-body">
-            Ya seas un novato o un veterano, nuestros eventos están diseñados para brindarte una experiencia
-            inolvidable.
-            ¡Reúne a tus amigos, forma un equipo y prepárate para la batalla! ¿Estás listo para poner a prueba tus
-            habilidades
-            y disfrutar de la emoción del airsoft? ¡Únete a nosotros en nuestros próximos eventos y sé parte de la
-            acción!
+        <div class="info-panel">
+            <h2 class="panel-title">Participa en nuestros eventos</h2>
+            <p class="panel-text">Ya seas un novato o un veterano, nuestros eventos están diseñados para brindarte una
+                experiencia
+                inolvidable.
+                ¡Reúne a tus amigos, forma un equipo y prepárate para la batalla! ¿Estás listo para poner a prueba tus
+                habilidades
+                y disfrutar de la emoción del airsoft? ¡Únete a nosotros en nuestros próximos eventos y sé parte de la
+                acción!</p>
+            {#     <a href="{% url '' %}"><button class="panel-button">Conoce nuestros eventos</button></a>#}
         </div>
-        <button class="button is-medium">Conoce nuestros eventos</button>
-    </article>
+
+
+    </div>
+
 
 </div>
 
-
-<script src="script.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
 
@@ -87,6 +83,4 @@
         autoplay: true,
     });
 </script>
-
-
 {% include 'pie_pagina.html' %}
