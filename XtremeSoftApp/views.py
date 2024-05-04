@@ -48,12 +48,38 @@ def eliminar_producto(request, id):
         return redirect('/lista_productos')
 
 
-def mostrar_campos(request):
-    lista_campos = Campo_Tiro.objects.all()
-    return render(request, "campos.html",  {'campos': lista_campos})
+def crear_empleado (request):
+    if request.method == 'GET':
+        lista_campos = Campo_Tiro.objects.all()
+        return render(request, 'crear_empleado.html',{'empleados':lista_campos})
+    else:
+        empleado = Empleado()
+        empleado.nombre = request.POST.get('name_emp')
+        empleado.fecha_nacimiento = request.POST.get('date_emp')
+        empleado.codigo = request.POST.get('code_emp')
+
+        empleado.mail = request.POST.get('mail_emp')
+        empleado.image_url = request.POST.get('image_emp')
+        empleado.save()
+
+        campos = request.POST.getlist('campo')
+
+        for c in campos:
+            campo_tiro = Campo_Tiro.objects.get(id=c)
+            empleado.campo.add(campo_tiro)
+
+        return redirect('lista_empleados/')
+
+
+
+
 
 def mostrar_registro(request):
     return render(request, 'registro.html')
+
+def mostrar_campos(request):
+    lista_campos = Campo_Tiro.objects.all()
+    return render(request, "campos.html",  {'campos': lista_campos})
 
 def crear_campo (request):
     if request.method=='GET':
@@ -64,7 +90,7 @@ def crear_campo (request):
         nuevo_campo.nombre = request.POST.get("nombre")
         nuevo_campo.aforo = int(request.POST.get("aforo"))
         nuevo_campo.localizacion = request.POST.get("localizacion")
-        # nuevo_campo.foto = request.POST.get("image")
+        nuevo_campo.image = request.POST.get("image")
         nuevo_campo.save()
         return redirect("/lista_campos")
 
@@ -78,7 +104,7 @@ def editar_campo (request,id):
         campos.nombre = request.POST.get("nombre")
         campos.aforo = int(request.POST.get("aforo"))
         campos.localizacion = request.POST.get("localizacion")
-        # campo.foto = request.POST.get("image")
+        campos.image = request.POST.get("image")
         Campo_Tiro.save(campos)
         return redirect('/lista_campos')
 
@@ -138,3 +164,5 @@ def do_login(request):
 def do_logout(request):
     logout(request)
     return redirect('inicio')
+
+

@@ -51,6 +51,9 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+
+
+
 class Pedido(models.Model):
     id = models.AutoField(primary_key=True)
     num_pedido = models.IntegerField()
@@ -84,7 +87,7 @@ class ItemsPedido(models.Model):
 
 class Campo_Tiro(models.Model):
     id = models.AutoField(primary_key=True)
-    #foto = models.CharField(max_length=1000, default="")
+    image = models.CharField(max_length=1000, default="")
     aforo = models.IntegerField(null= False)
     nombre = models.CharField(max_length=200)
     localizacion = models.CharField(max_length=300)
@@ -92,6 +95,17 @@ class Campo_Tiro(models.Model):
     def __str__(self):
         return self.nombre
 
+class Empleado(models.Model):
+    nombre = models.CharField(max_length=500)
+    fecha_nacimiento = models.DateField(null=False)
+    codigo = models.CharField(max_length=9)
+    mail = models.CharField(max_length=500)
+    image_url = models.CharField(max_length=900)
+    usuario = models.OneToOneField(Usuario, null=True, on_delete=models.DO_NOTHING)
+    campo = models.ManyToManyField(Campo_Tiro, null=False)
+
+    def __str__(self):
+        return str(self.id) + " - " + self.nombre
 class Tramo_reserva(models.TextChoices):
     T1 = 1
     T2 = 2

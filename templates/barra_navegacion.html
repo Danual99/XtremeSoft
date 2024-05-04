@@ -6,8 +6,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>SafaEat</title>
-    <link rel="stylesheet" href="/static/css/xtremesoft_estilos.css">
+    <title>XtremeSoft</title>
+    <link rel="stylesheet" href="{% static  '/css/xtremesoft_estilos.css' %}/">
 
     {% block css %}
         {% font_awesome %}
@@ -69,10 +69,14 @@
                         <a class="navbar-item">
                             Contact
                         </a>
+                        {% if user.is_authenticated %}
+{#                        {% if user.rol == 'ADMIN' %}#}
                         <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Report an issue
+                        <a class="navbar-item" href="{% url 'crear_empleado' %}">
+                            Nuevo empleado
                         </a>
+{#                        {% endif %}#}
+                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -80,15 +84,25 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
+                         {% if user.is_authenticated %}
+                             <h1 style="margin-right: 20px; font-weight: bold; text-transform: uppercase;">Hola, </h1>
+                             <a class="button is-light" href="{% url 'do_logout' %}">
+                            Cerrar sesión
+                            </a>
+{#                            <span class="icon is-small is-left">#}
+{#                                <i class="fa fa-border fa-shopping-cart"></i>#}
+{#                             </span>#}
+                           {% else %}
                         <a class="button is-primary" href="{% url 'registro_usuario' %}">
                             <strong>Registrarse</strong>
                         </a>
+
                         <a class="button is-light" href="{% url 'do_login' %}">
                             Inicar sesión
                         </a>
-                         <a class="button is-light" href="{% url 'do_logout' %}">
-                            Cerrar sesión
-                        </a>
+                    {% endif %}
+
+
                     </div>
                 </div>
             </div>

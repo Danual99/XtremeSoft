@@ -12,9 +12,13 @@ urlpatterns = [
     path('nuevo_campo_de_tiro/', crear_campo, name='crear_campo_de_tiro'),
     path('nuevo_campo_de_tiro/editar/<int:id>', editar_campo, name='editar_campo_de_tiro'),
     path('nuevo_campo_de_tiro/eliminar/<int:id>', eliminar_campo, name='eliminar_campo_de_tiro'),
+    path('empleado/nuevo/', crear_empleado, name='crear_empleado'),
+    # path('lista_empleados/', crear_empleado, name='crear_empleado'),
+
     path('usuario/registro/', registro_usuario, name='registro_usuario'),
     path('usuario/login', do_login, name='do_login'),
-    path('logout/', do_logout, name='do_logout')
+    path('logout/', do_logout, name='do_logout'),
+
 
 
 ]
