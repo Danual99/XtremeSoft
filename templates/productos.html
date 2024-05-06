@@ -7,8 +7,21 @@
 <div class="columns is-mobile is-centered">
     <p class="title is-2">Nuestros productos</p>
 </div>
+    {% block buscador %}
+                {% csrf_token %}
+                <form method="GET" action="{% url 'buscarproducto' %}">
+                    <div >
+                        <input type="text"  placeholder="Buscar..."  name="buscar" >
+                        <div >
+
+                        </div>
+                    </div>
+                </form>
+
+    {% endblock buscador %}
 
 {% for prod in productos %}
+
 
     {% if forloop.counter0|divisibleby:3 %}
         {% if not forloop.first %}

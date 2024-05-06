@@ -47,6 +47,12 @@ def eliminar_producto(request, id):
         Producto.delete(producto)
         return redirect('/lista_productos')
 
+def buscar_productos(request):
+    nombre = request.GET.get("buscar")
+    productos = Producto.objects.filter(nombre__icontains=nombre)
+
+    return render(request, 'productos.html', {'productos': productos})
+
 
 def mostrar_campos(request):
     lista_campos = Campo_Tiro.objects.all()
@@ -64,7 +70,7 @@ def crear_campo (request):
         nuevo_campo.nombre = request.POST.get("nombre")
         nuevo_campo.aforo = int(request.POST.get("aforo"))
         nuevo_campo.localizacion = request.POST.get("localizacion")
-        # nuevo_campo.foto = request.POST.get("image")
+        nuevo_campo.image = request.POST.get("image")
         nuevo_campo.save()
         return redirect("/lista_campos")
 
@@ -78,7 +84,7 @@ def editar_campo (request,id):
         campos.nombre = request.POST.get("nombre")
         campos.aforo = int(request.POST.get("aforo"))
         campos.localizacion = request.POST.get("localizacion")
-        # campo.foto = request.POST.get("image")
+        campos.image = request.POST.get("image")
         Campo_Tiro.save(campos)
         return redirect('/lista_campos')
 
@@ -87,6 +93,12 @@ def eliminar_campo(request, id):
     if campo is not None:
         Campo_Tiro.delete(campo)
         return redirect('/lista_campos')
+
+def buscar_campos(request):
+    nombre = request.GET.get("buscar")
+    campos = Campo_Tiro.objects.filter(nombre__icontains=nombre)
+
+    return render(request, 'campos.html', {'campos': campos})
 
 
 
@@ -138,3 +150,5 @@ def do_login(request):
 def do_logout(request):
     logout(request)
     return redirect('inicio')
+
+

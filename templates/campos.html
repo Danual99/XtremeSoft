@@ -8,6 +8,19 @@
     <p class="title is-2">Campos de tiro</p>
 </div>
 
+    {% block buscador %}
+                {% csrf_token %}
+                <form method="GET" action="{% url 'buscarcampo' %}">
+                    <div >
+                        <input type="text"  placeholder="Buscar..."  name="buscar" >
+                        <div >
+
+                        </div>
+                    </div>
+                </form>
+
+    {% endblock buscador %}
+
 {% for camp in campos %}
 
     {% if forloop.counter0|divisibleby:3 %}
@@ -23,7 +36,7 @@
 
                 <div class="content">
                     <figure class="image is-128x128">
-{#                        <img src="{{ camp.foto }}"/>#}
+                        <img src="{{ camp.image }}"/>
                     </figure>
 
                     <dhiv class="media-content">
