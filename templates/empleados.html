@@ -1,0 +1,73 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Empleados</p>
+</div>
+
+<table class="table" style="margin-left: 200px">
+    <thead>
+    <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Fecha nacimiento</th>
+        <th>Código</th>
+        <th>Email</th>
+{#        <th>Campo</th>#}
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for emp in empleados %}
+
+        <tr class="fila">
+
+            <td><img src="{{ emp.image_url }}" style="max-width: 100px; border-radius: 80%"></td>
+            <td> {{ emp.nombre }} <br>
+                <a href="{% url 'usuario_empleado' id=emp.id %}">Crear usuario</a>
+            </td>
+            <td>{{ emp.fecha_nacimiento|date:'d-m-Y' }}  </td>
+            <td>{{ emp.codigo }} </td>
+            <td> {{ emp.mail }} </td>
+
+
+
+            <td>
+<a href="{% url 'editar_empleado' id=emp.id %}">
+        <span class="icon">
+                                    <i class="fas fa-pen"></i>
+        </span>
+</a>
+            </td>
+
+
+                <td>
+                     <a href="{% url 'eliminar_empleado' id=emp.id %}">
+                    <span class="icon">
+                                    <i class="fas fa-trash"></i>
+      </span>
+                     </a>
+                </td>
+
+
+        </tr>
+
+
+        </tbody>
+    {% endfor %}
+</table>
+
+
+
+<a class="navbar-item" href="{% url 'crear_empleado' %}">
+    <button class="button is-normal button is-info" style="margin-left: 50%; margin-bottom: 100px">
+        Nuevo empleado
+    </button>
+</a>
+
+
+{% include 'pie_pagina.html' %}

@@ -1,17 +1,23 @@
 
+.body{
 
+  background-image: url("https://img.freepik.com/premium-photo/dark-wall-halloween-background-concept-scary-background-horror-texture-banner_526818-614.jpg");
+}
 /*-------------------------Estilos carrusel--------------*/
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 
 .pic-ctn {
   max-width: 100vw;
   max-height: 200px;
+  top:0;
+
 }
 
 @keyframes display {
@@ -265,13 +271,49 @@ section {
 
 }
 
-/*Contenido inicio*/
+/*---------------------Paneles info-----------------------*/
+.paneles{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-.texto-inicio{
-    margin-top: 500px;
-    margin-bottom: 100px;
+padding-top: 400px;
+
+
+}
+	.info-panel {
+  width: 80%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+      margin-bottom: 5%;
+
 
 }
 
+.panel-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
 
+.panel-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.panel-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.panel-button:hover {
+  background-color: #0056b3;
+}
 

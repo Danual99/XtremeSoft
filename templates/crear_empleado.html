@@ -1,0 +1,90 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Nuevo empleado</p>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="name_emp" class="subtitle is-5"> Nombre</label>
+                </div>
+                <div class="column">
+                    <input id="name_emp" value="{{ lista_empleados.nombre }}" name="name_emp" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+          <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="date_emp" class="subtitle is-5"> Fecha nacimiento</label>
+                </div>
+                <div class="column">
+                    <input id="date_emp" value="{{ lista_empleados.fecha_nacimiento }}" name="date_emp" type="date" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="code_emp" class="subtitle is-5"> Código</label>
+                </div>
+                <div class="column">
+                    <input id="price" value="{{ lista_empleados.codigo}}"  name="code_emp" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+             <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="mail_emp" class="subtitle is-5"> Email</label>
+                </div>
+                <div class="column">
+                    <input id="price" value="{{ lista_empleados.mail}}"  name="mail_emp" type="email" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="image_emp" class="subtitle is-5"> Imagen </label>
+                </div>
+                <div class="column">
+                    <input id="image" value="{{ lista_empleados.image_url }}" name="image_emp" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                     <label for="campo" class="subtitle is-5"> Campo</label>
+                </div>
+                <div class="column">
+                    <div class="select">
+                        <select id="shop" name="campos" multiple>
+                             {% for c in campos %}
+
+                                 <option value="{{ c.id }}">{{ c.nombre }}</option>
+
+
+                             {% endfor %}
+                         </select>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-mobile is-centered">
+                <input class="button is-info is-light" type="submit" style="margin-top: 150px" value="Crear empleado">
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+{% include 'pie_pagina.html' %}

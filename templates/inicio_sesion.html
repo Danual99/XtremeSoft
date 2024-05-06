@@ -3,34 +3,226 @@
 {% load static %}
 
 {% include 'barra_navegacion.html' %}
-<form method="post">
+
+
+
+
+<form method="post" class="form">
+    <section>
+    <div class="signin">
+        <div class="content">
+
+             <h2>Iniciar sesión</h2>
     {% csrf_token %}
-    <div class="field">
+
+    <div class="inputBox">
         <label class="label" for="email">Email</label>
         <p class="control has-icons-left has-icons-right">
             <input class="input" type="email" placeholder="Email" name="email">
             <span class="icon is-small is-left">
       <i class="fas fa-envelope"></i>
     </span>
-            <span class="icon is-small is-right">
-      <i class="fas fa-check"></i>
-    </span>
         </p>
     </div>
-    <div class="field">
+
+     <div class="inputBox">
         <label class="label" for="password">Password</label>
-        <p class="control has-icons-left">
-            <input class="input" type="password" placeholder="Password" name="password">
-            <span class="icon is-small is-left">
+        <p class="control has-icons-left has-icons-right">
+           <input class="input" type="password" placeholder="Password" name="password">
+           <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
             </span>
         </p>
     </div>
-    <div class="field">
+
+    <div class="inputBox">
         <input class="button is-link" type="submit" value="Login">
     </div>
+                  </div>
+    </div>
+</section>
+
 </form>
+
 
 {{ error }}
 
 {% include 'pie_pagina.html' %}
+
+<style>
+
+    section
+{
+    /*position: absolute;*/
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content:left;
+        padding-left: 100px;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+
+
+  overflow: hidden;
+        background: url("/static/img/fondo_formulario.jpg");
+       background-size: cover;
+        background-repeat: no-repeat;
+}
+section::before
+{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+
+
+}
+
+section span
+{
+  position: relative;
+
+
+  /*display: block;*/
+  /*width: calc(6.25vw - 2px);*/
+  /*height: calc(6.25vw - 2px);*/
+  /*background: #181818;*/
+
+  /*z-index: 2;*/
+  /*transition: 1.5s;*/
+}
+
+
+
+section .signin
+{
+  position: absolute;
+
+  background: #222;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0,0,0,9);
+  width: 450px;
+
+
+}
+section .signin .content
+{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+
+}
+section .signin .content h2
+{
+  font-size: 2em;
+  color:white;
+  text-transform: uppercase;
+
+}
+
+<!--section .signin .content .form
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+}-->
+
+<!--section .signin .content .form .inputBox
+{
+  position: relative;
+  width: 100%;
+
+}-->
+
+<!--section .signin .content .form .inputBox input
+{
+  position: relative;
+  width: 100%;
+  background: #333;
+
+  border: none;
+  outline: none;
+  padding: 25px 10px 7.5px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1em;
+
+}-->
+
+section .signin .content .form .inputBox i
+{
+  position: absolute;
+  left: 5px;
+  padding: 15px 10px;
+  font-style: normal;
+  color: #aaa;
+  transition: 0.5s;
+  pointer-events: none;
+
+
+}
+
+
+.signin .content .form .inputBox input:focus ~ i,
+.signin .content .form .inputBox input:valid ~ i
+{
+  transform: translateY(-7.5px);
+  font-size: 0.8em;
+  color: #fff;
+  margin-left: 50px;
+}
+.signin .content .form .links
+{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}
+.signin .content .form .links a
+{
+  color: #fff;
+  text-decoration: none;
+
+}
+.signin .content .form .links a:nth-child(2)
+{
+  color: blue;
+  font-weight: 600;
+}
+.signin .content .form .inputBox input[type="submit"]
+{
+  padding: 10px;
+  background: red;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.35em;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+input[type="submit"]:active
+{
+  opacity: 0.6;
+}
+
+.inputBox label{
+  color: white;
+  font-weight: 600;
+  font-size: 1.35em;
+  }
+
+</style>
