@@ -51,7 +51,7 @@ def eliminar_producto(request, id):
 def crear_empleado (request):
     if request.method == 'GET':
         lista_campos = Campo_Tiro.objects.all()
-        return render(request, 'crear_empleado.html',{'empleados':lista_campos})
+        return render(request, 'crear_empleado.html',{'campos':lista_campos})
     else:
         empleado = Empleado()
         empleado.nombre = request.POST.get('name_emp')
@@ -60,17 +60,58 @@ def crear_empleado (request):
 
         empleado.mail = request.POST.get('mail_emp')
         empleado.image_url = request.POST.get('image_emp')
+
         empleado.save()
 
-        campos = request.POST.getlist('campo')
+        campos = request.POST.getlist('campos')
 
         for c in campos:
-            campo_tiro = Campo_Tiro.objects.get(id=c)
-            empleado.campo.add(campo_tiro)
+            campo = Campo_Tiro.objects.get(id=c)
+            empleado.campos.add(campo)
 
+
+        return redirect('/lista_empleados/')
+
+def ver_empleados(request):
+    lista_empleados = Empleado.objects.all()
+    return render(request, 'empleados.html' ,{'empleados':lista_empleados})
+
+def editar_empleado (request, id):
+    if request.method == 'GET':
+        empleado = Empleado.objects.get(id=id)
+        return render(request, 'crear_empleado.html', {'producto':empleado})
+    else:
+        empleado = Empleado()
+        empleado.id = id
+        empleado.nombre = request.POST.get('name_emp')
+        empleado.fecha_nacimiento = request.POST.get('date_emp')
+        empleado.codigo = request.POST.get('code_emp')
+        empleado.mail= request.POST.get('mail_emp')
+        empleado.image_url = request.POST.get('image_emp')
+        Empleado.save(empleado)
+        return redirect('/lista_empleados')
+
+def eliminar_empleado(request, id):
+    empleado = Empleado.objects.get(id=id)
+    if empleado is not None:
+        Empleado.delete(empleado)
+        return redirect('/lista_empleados')
+
+
+
+def crear_usuario_empleado(request, id):
+    empleado = Empleado.objects.get(id=id)
+
+    if empleado.usuario is None:
+        usuario = Usuario()
+        usuario.username = empleado.nombre.replace(" ","_")
+        usuario.email = empleado.mail
+        usuario.password = make_password(empleado.codigo)
+        usuario.rol = Rol.EMPLOYEE
+        usuario.save()
+        return redirect('do_login')
+    else:
         return redirect('lista_empleados/')
-
-
 
 
 

@@ -4,8 +4,8 @@
 
 {% include 'barra_navegacion.html' %}
 
-<div class="columns is-mobile is-centered">
-    <p class="title is-2">Nuestros productos</p>
+<div class="columns is-mobile is-centered" style="margin-top: 100px; margin-bottom: 75px">
+    <p class="title is-2" style="color:wheat">Nuestros productos</p>
 </div>
 
 {% for prod in productos %}
@@ -22,7 +22,7 @@
             <div class="card-content">
 
                 <div class="content">
-                    <figure class="image is-128x128">
+                    <figure class="image is-50x50">
                         <img src="{{ prod.foto }}"/>
                     </figure>
 
@@ -57,5 +57,12 @@
         Nuevo producto
     </button>
 </a>
+
+<style>
+    body{
+         background: rgb(2,0,36);
+        background: linear-gradient(to left, rgba(2,0,36,1), rgba(35,48,35,1) 50%,  rgba(96,126,118,1) 75%);
+    }
+</style>
 
 {% include 'pie_pagina.html' %}
