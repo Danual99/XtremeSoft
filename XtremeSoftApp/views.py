@@ -184,7 +184,7 @@ def registro_usuario(request):
         else:
             user = Usuario.objects.create(username=username, password=make_password(password), email=email)
             user.save()
-            return redirect('do_login')
+            return redirect('inicio')
 
 
 def do_login(request):

@@ -28,7 +28,7 @@
 
             <td><img src="{{ emp.image_url }}" style="max-width: 100px; border-radius: 80%"></td>
             <td> {{ emp.nombre }} <br>
-                <a href="{% url 'crear_usuario_empleado' id=emp.id %}">Crear usuario</a>
+                <a href="{% url 'usuario_empleado' id=emp.id %}">Crear usuario</a>
             </td>
             <td>{{ emp.fecha_nacimiento|date:'d-m-Y' }}  </td>
             <td>{{ emp.codigo }} </td>

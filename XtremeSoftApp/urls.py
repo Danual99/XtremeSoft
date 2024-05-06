@@ -17,7 +17,7 @@ urlpatterns = [
     path('lista_empleados/', ver_empleados, name='ver_empleados'),
     path('empleados/eliminar/<int:id>', eliminar_empleado, name='eliminar_empleado'),
     path('empleados/editar/<int:id>', editar_empleado, name='editar_empleado'),
-    path('empleado/usuario/<int:id>', crear_usuario_empleado, name='crear_usuario_empleado'),
+    path('empleado/usuario/<int:id>', crear_usuario_empleado, name='usuario_empleado'),
 
     path('usuario/registro/', registro_usuario, name='registro_usuario'),
     path('usuario/login', do_login, name='do_login'),
