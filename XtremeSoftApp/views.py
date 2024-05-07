@@ -79,7 +79,10 @@ def ver_empleados(request):
 def editar_empleado (request, id):
     if request.method == 'GET':
         empleado = Empleado.objects.get(id=id)
-        return render(request, 'crear_empleado.html', {'producto':empleado})
+        campos = Campo_Tiro.objects.all()
+        ids_cammpos = empleado.campos.values_list('id', flat=True)
+
+        return render(request, 'crear_empleado.html', {'empleado':empleado, 'campos':campos, 'ids_campos':ids_cammpos})
     else:
         empleado = Empleado()
         empleado.id = id
@@ -89,6 +92,8 @@ def editar_empleado (request, id):
         empleado.mail= request.POST.get('mail_emp')
         empleado.image_url = request.POST.get('image_emp')
         Empleado.save(empleado)
+
+
         return redirect('/lista_empleados')
 
 def eliminar_empleado(request, id):
