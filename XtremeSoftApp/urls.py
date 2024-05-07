@@ -23,6 +23,8 @@ urlpatterns = [
     path('usuario/login', do_login, name='do_login'),
     path('logout/', do_logout, name='do_logout'),
 
+    path('acceso_denegado/', acceso_denegado, name='acceso_denegado')
+
 
 
 ]

@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from .models import *
 from  django.contrib.auth import authenticate, login, logout
-
+from .decorators import *
 # Create your views here.
 
 def inicio (request):
@@ -71,7 +71,7 @@ def crear_empleado (request):
 
 
         return redirect('/lista_empleados/')
-
+@check_user_role('EMP')
 def ver_empleados(request):
     lista_empleados = Empleado.objects.all()
     return render(request, 'empleados.html' ,{'empleados':lista_empleados})
@@ -114,6 +114,9 @@ def crear_usuario_empleado(request, id):
         usuario.password = make_password(empleado.codigo)
         usuario.rol = Rol.EMPLOYEE
         usuario.save()
+
+        empleado.usuario = usuario
+        empleado.save()
         return redirect('do_login')
     else:
         return redirect('lista_empleados/')
@@ -211,4 +214,6 @@ def do_logout(request):
     logout(request)
     return redirect('inicio')
 
+def acceso_denegado(request):
+    return render(request, 'acceso_denegado.html')
 
