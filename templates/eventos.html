@@ -4,4 +4,78 @@
 
 {% include 'barra_navegacion.html' %}
 
+<div class="columns is-mobile is-centered" style="margin-top: 100px; margin-bottom: 75px">
+    <p class="title is-2" style="color:wheat">Próximos eventos</p>
+</div>
+
+{% for e in eventos %}
+
+    {% if forloop.counter0|divisibleby:3 %}
+        {% if not forloop.first %}
+            </div> <!-- Cerrar el contenedor columns si no es el primer elemento -->
+        {% endif %}
+        <div class="columns"> <!-- Abrir un nuevo contenedor columns cada 3 elementos -->
+    {% endif %}
+
+<div class="column is-one-third-desktop tarjeta_contendor">
+    <div class="card">
+        <div class="card-content">
+
+            <div class="content">
+                <figure>
+                    <img style=""
+                         src=""/>
+                </figure>
+
+ <button class="button is-normal button is-info">
+                    Editar evento
+                </button>
+                <button class="button is-normal button is-info">
+                    Eliminar evento
+                </button>
+</div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+{% if forloop.last %}
+    </div> <!-- Asegurarse de cerrar el contenedor columns al final -->
+{% endif %}
+
+
+{% endfor %}
+
+
+<a href="{% url 'crear_evento' %}">
+    <button class="button is-normal button is-info">
+        Nuevo evento
+    </button>
+</a>
+
+<style>
+    body {
+        background-image: url("https://milsim.fullmetal.es/build/assets/bg-granite.6f7397a4.webp");
+    }
+
+    .card {
+        background-image: url("https://milsim.fullmetal.es/storage/operations/688/conversions/638ea04e9451dfd5dd6b2260216fe0e0-default.jpg");
+        background-size: cover;
+        transition: transform .2s;
+        width: 400px;
+        height: 500px;
+        margin: 100px;
+
+    }
+
+    .card:hover {
+        transform: scale(1.1);
+    }
+</style>
+
 {% include 'pie_pagina.html' %}
