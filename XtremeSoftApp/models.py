@@ -91,8 +91,8 @@ class Empleado(models.Model):
     codigo = models.CharField(max_length=9)
     mail = models.CharField(max_length=500)
     image_url = models.CharField(max_length=900)
-    usuario = models.OneToOneField(Usuario, null=True, on_delete=models.DO_NOTHING)
-    campo = models.ManyToManyField(Campo_Tiro, null=False)
+    usuario = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
+    campos = models.ManyToManyField(Campo_Tiro, null=False)
 
     def __str__(self):
         return str(self.id) + " - " + self.nombre

@@ -11,6 +11,7 @@ urlpatterns = [
     path('productos/comprar/<int:id>', comprar_producto, name="añadiralcarro"),
 
     path('lista_campos/', mostrar_campos, name='mostrar_campos'),
+
     path('nuevo_campo_de_tiro/', crear_campo, name='crear_campo_de_tiro'),
     path('nuevo_campo_de_tiro/editar/<int:id>', editar_campo, name='editar_campo_de_tiro'),
     path('nuevo_campo_de_tiro/eliminar/<int:id>', eliminar_campo, name='eliminar_campo_de_tiro'),
@@ -36,6 +37,8 @@ urlpatterns = [
     path('mispedidos/', listar_pedidos, name="mispedidos"),
     path('mispedidos/eliminar/<int:id>', eliminar_pedido, name="mispedidos"),
     path('mispedidos/productos/<int:id>', listar_productos_pedido, name="misproductos"),
+
+    path('acceso_denegado/', acceso_denegado, name='acceso_denegado')
 
 
 

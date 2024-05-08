@@ -6,6 +6,7 @@ from .carrito import *
 import random
 import string
 
+from .decorators import *
 # Create your views here.
 
 def inicio (request):
@@ -88,7 +89,10 @@ def ver_empleados(request):
 def editar_empleado (request, id):
     if request.method == 'GET':
         empleado = Empleado.objects.get(id=id)
-        return render(request, 'crear_empleado.html', {'producto':empleado})
+        campos = Campo_Tiro.objects.all()
+        ids_cammpos = empleado.campos.values_list('id', flat=True)
+
+        return render(request, 'crear_empleado.html', {'empleado':empleado, 'campos':campos, 'ids_campos':ids_cammpos})
     else:
         empleado = Empleado()
         empleado.id = id
@@ -98,6 +102,14 @@ def editar_empleado (request, id):
         empleado.mail= request.POST.get('mail_emp')
         empleado.image_url = request.POST.get('image_emp')
         Empleado.save(empleado)
+
+        lista_campos = request.POST.getlist('campos')
+        empleado.campos.clear()
+        for c in lista_campos:
+            campo = Campo_Tiro.objects.get(id=c)
+            empleado.campos.add(campo)
+
+
         return redirect('/lista_empleados')
 
 def eliminar_empleado(request, id):
@@ -118,6 +130,9 @@ def crear_usuario_empleado(request, id):
         usuario.password = make_password(empleado.codigo)
         usuario.rol = Rol.EMPLOYEE
         usuario.save()
+
+        empleado.usuario = usuario
+        empleado.save()
         return redirect('do_login')
     else:
         return redirect('lista_empleados/')
@@ -221,6 +236,8 @@ def do_logout(request):
     logout(request)
     return redirect('inicio')
 
+def acceso_denegado(request):
+    return render(request, 'acceso_denegado.html')
 
 def ver_carrito(request):
     carrito = Carrito()
