@@ -63,16 +63,26 @@
 </form>
 
 
-<div class="columns is-mobile is-centered">
+<div class="mensaje_error">
     {% for e in errores %}
 
-        <p style="color:red">{{ e }}</p>
+        <p>{{ e }}</p>
 
     {% endfor %}
 </div>
 {% include 'pie_pagina.html' %}
 
 <style>
+
+    .mensaje_error{
+        color: wheat;
+        background-color: crimson;
+        border: ridge white;
+        border-width: 5px;
+        font-size: large;
+        font-weight: bold;
+
+    }
 
     section {
         /*position: absolute;*/
