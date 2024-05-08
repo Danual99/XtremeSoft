@@ -51,18 +51,6 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-
-
-
-class Pedido(models.Model):
-    id = models.AutoField(primary_key=True)
-    num_pedido = models.IntegerField()
-    fecha = models.DateTimeField(auto_now_add=True)
-    usuario = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.num_pedido, self.fecha
-
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=250)
@@ -73,6 +61,12 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre, self.precio
 
+class Pedido(models.Model):
+    id = models.AutoField(primary_key=True)
+    identificador = models.IntegerField()
+    fecha = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE)
+
 class ItemsPedido(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=250)
@@ -80,10 +74,6 @@ class ItemsPedido(models.Model):
     precio = models.FloatField()
     total = models.FloatField()
     pedido = models.ForeignKey(Pedido, null=False, blank=False, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, null=False, blank=False, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre, self.total
 
 class Campo_Tiro(models.Model):
     id = models.AutoField(primary_key=True)

@@ -11,10 +11,16 @@
     {% block buscador %}
                 {% csrf_token %}
                 <form method="GET" action="{% url 'buscarcampo' %}">
-                    <div >
-                        <input type="text"  placeholder="Buscar..."  name="buscar" >
-                        <div >
-
+                    <div class="columns is-mobile is-centered" style="margin-bottom: 2%">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="text" placeholder=""  name="buscar">
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Buscar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
