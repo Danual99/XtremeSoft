@@ -71,7 +71,7 @@ def crear_empleado (request):
 
 
         return redirect('/lista_empleados/')
-@check_user_role('EMP')
+
 def ver_empleados(request):
     lista_empleados = Empleado.objects.all()
     return render(request, 'empleados.html' ,{'empleados':lista_empleados})
@@ -92,6 +92,12 @@ def editar_empleado (request, id):
         empleado.mail= request.POST.get('mail_emp')
         empleado.image_url = request.POST.get('image_emp')
         Empleado.save(empleado)
+
+        lista_campos = request.POST.getlist('campos')
+        empleado.campos.clear()
+        for c in lista_campos:
+            campo = Campo_Tiro.objects.get(id=c)
+            empleado.campos.add(campo)
 
 
         return redirect('/lista_empleados')
