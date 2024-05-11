@@ -23,7 +23,11 @@ urlpatterns = [
     path('usuario/login', do_login, name='do_login'),
     path('logout/', do_logout, name='do_logout'),
 
-    path('acceso_denegado/', acceso_denegado, name='acceso_denegado')
+    path('acceso_denegado/', acceso_denegado, name='acceso_denegado'),
+
+    path('lista_eventos/', mostrar_eventos, name='mostrar_eventos'),
+    path('nuevo_evento/', crear_evento, name='crear_evento'),
+    path('editar_evento/<int:id>', editar_evento, name='editar_evento')
 
 
 

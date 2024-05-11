@@ -128,8 +128,9 @@ class Evento(models.Model):
     nombre = models.CharField(max_length=300)
     fecha = models.DateField(null=False)
     precio = models.FloatField(null=False)
-    campo_tiro = models.ForeignKey(Campo_Tiro, null=False, blank=False, on_delete=models.CASCADE)
-    jugador = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE)
+    imagen_evento = models.CharField(max_length=900, default=True)
+    campo_tiro = models.ManyToManyField(Campo_Tiro, null=False, blank=False)
+
 
     def __str__(self):
         return self.nombre, self.fecha

@@ -23,13 +23,15 @@
 
             <div class="content">
                 <figure>
-                    <img style=""
-                         src=""/>
+                    <img style="max-width: 100%; height: auto"
+                         src="{{ e.imagen_evento }}"/>
                 </figure>
 
- <button class="button is-normal button is-info">
+                <a href="{% url 'editar_evento' id=e.id %}">
+                    <button class="button is-normal button is-info">
                     Editar evento
                 </button>
+                </a>
                 <button class="button is-normal button is-info">
                     Eliminar evento
                 </button>
@@ -64,8 +66,6 @@
     }
 
     .card {
-        background-image: url("https://milsim.fullmetal.es/storage/operations/688/conversions/638ea04e9451dfd5dd6b2260216fe0e0-default.jpg");
-        background-size: cover;
         transition: transform .2s;
         width: 400px;
         height: 500px;

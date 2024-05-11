@@ -210,6 +210,7 @@ def do_login(request):
 
         if user is not None:
             login(request, user)
+            request.session['email'] = email
             return redirect('inicio')
         else:
             return render(request, 'inicio_sesion.html', {"error": "No ha sido posible iniciar sesión"})
@@ -222,4 +223,58 @@ def do_logout(request):
 
 def acceso_denegado(request):
     return render(request, 'acceso_denegado.html')
+
+def mostrar_eventos(request):
+    lista_eventos = Evento.objects.all()
+    return render(request, 'eventos.html', {'eventos':lista_eventos})
+
+def crear_evento(request):
+    if request.method == 'GET':
+        campos = Campo_Tiro.objects.all()
+        return render(request, 'crear_evento.html', {'campos':campos})
+    else:
+        nuevo_evento = Evento()
+        nuevo_evento.nombre = request.POST.get("evento_nombre")
+        nuevo_evento.imagen_evento = request.POST.get("evento_imagen")
+        nuevo_evento.precio = float(request.POST.get("evento_precio"))
+        nuevo_evento.fecha = request.POST.get("evento_fecha")
+
+        nuevo_evento.save()
+
+        campos = request.POST.getlist("evento_campo")
+
+        for c in campos:
+            campo = Campo_Tiro.objects.get(id=c)
+            nuevo_evento.campo_tiro.add(campo)
+
+
+        return redirect("mostrar_eventos")
+
+
+
+def editar_evento(request, id):
+    if request.method == 'GET':
+        evento = Evento.objects.get(id=id)
+        campos = Campo_Tiro.objects.all()
+        id_campo = evento.campo_tiro.values_list('id', flat=True)
+        return render(request, 'crear_evento.html', {'evento':evento, 'campos':campos, 'id_campo':id_campo})
+    else:
+        evento = Evento()
+
+        evento.id = id
+        evento.nombre = request.POST.get('evento_nombre')
+        evento.fecha = request.POST.get('evento_fecha')
+        evento.precio = float(request.POST.get('evento_precio'))
+        evento.imagen_evento = request.POST.get('evento_imagen')
+        evento.save()
+        evento.campo_tiro.clear()
+        evento.campo_tiro.set
+
+
+
+
+        return redirect('/editar_evento')
+
+
+
 
