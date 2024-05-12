@@ -2,7 +2,6 @@ from django.contrib.auth.models import UserManager
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
-# Create your models here.
 
 #Aqui vamos a crear clases como tablas de base de datos, todas ellas extienden models.model
 

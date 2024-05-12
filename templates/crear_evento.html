@@ -18,7 +18,7 @@
                     <label for="evento_nombre" class="subtitle is-5"> Nombre</label>
                 </div>
                 <div class="column">
-                    <input id="name_emp" value="{{ evento.nombre }}" name="evento_nombre" type="text" class="input" placeholder="">
+                    <input id="name_emp" value="{{ eventos.nombre }}" name="evento_nombre" type="text" class="input" placeholder="">
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
                     <label for="evento_fecha" class="subtitle is-5"> Fecha evento</label>
                 </div>
                 <div class="column">
-                    <input id="date_emp" value="{{ evento.fecha|date:'Y-m-d' }}" name="evento_fecha" type="date" class="input" placeholder="">
+                    <input id="date_emp" value="{{ eventos.fecha|date:'Y-m-d' }}" name="evento_fecha" type="date" class="input" placeholder="">
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                     <label for="price" class="subtitle is-5"> Precio</label>
                 </div>
                 <div class="column">
-                    <input id="price" value="{{ evento.precio}}"  step="0.01" name="evento_precio" type="number" class="input" placeholder="">
+                    <input id="price" value="{{ eventos.precio}}"  step="0.01" name="evento_precio" type="number" class="input" placeholder="">
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
                     <label for="image_emp" class="subtitle is-5"> Imagen </label>
                 </div>
                 <div class="column">
-                    <input id="image" value="{{ evento.imagen_evento }}" name="evento_imagen" type="text" class="input" placeholder="">
+                    <input id="image" value="{{ eventos.imagen_evento }}" name="evento_imagen" type="text" class="input" placeholder="">
                 </div>
             </div>
 

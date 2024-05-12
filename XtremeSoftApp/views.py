@@ -254,10 +254,10 @@ def crear_evento(request):
 
 def editar_evento(request, id):
     if request.method == 'GET':
-        evento = Evento.objects.get(id=id)
+        eventos = Evento.objects.get(id=id)
         campos = Campo_Tiro.objects.all()
         id_campo = evento.campo_tiro.values_list('id', flat=True)
-        return render(request, 'crear_evento.html', {'evento':evento, 'campos':campos, 'id_campo':id_campo})
+        return render(request, 'crear_evento.html', {'eventos':eventos, 'campos':campos, 'id_campo':id_campo})
     else:
         evento = Evento()
 
@@ -269,12 +269,11 @@ def editar_evento(request, id):
         evento.save()
         evento.campo_tiro.clear()
         evento.campo_tiro.set
+        return redirect('/lista_eventos')
 
-
-
-
-        return redirect('/editar_evento')
-
-
-
+def eliminar_evento(request, id):
+    evento = Evento.objects.get(id=id)
+    if evento is not None:
+        Evento.delete(evento)
+        return redirect('/lista_eventos')
 

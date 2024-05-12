@@ -23,7 +23,7 @@
 
             <div class="content">
                 <figure>
-                    <img style="max-width: 100%; height: auto"
+                    <img style="height: 400px; width: 400px"
                          src="{{ e.imagen_evento }}"/>
                 </figure>
 
@@ -32,9 +32,11 @@
                     Editar evento
                 </button>
                 </a>
-                <button class="button is-normal button is-info">
+                <a href="{% url 'eliminar_evento' id=e.id %}">
+                    <button class="button is-normal button is-info">
                     Eliminar evento
                 </button>
+                    </a>
 </div>
             </div>
 
