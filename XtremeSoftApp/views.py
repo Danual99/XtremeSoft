@@ -256,7 +256,7 @@ def editar_evento(request, id):
     if request.method == 'GET':
         eventos = Evento.objects.get(id=id)
         campos = Campo_Tiro.objects.all()
-        id_campo = evento.campo_tiro.values_list('id', flat=True)
+        id_campo = eventos.campo_tiro.values_list('id', flat=True)
         return render(request, 'crear_evento.html', {'eventos':eventos, 'campos':campos, 'id_campo':id_campo})
     else:
         evento = Evento()
