@@ -1,0 +1,45 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+<br>
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Pedidos</p>
+</div>
+
+<table class="table" style="margin-left: 30%">
+    <thead>
+    <tr>
+        <th>Serial</th>
+        <th>Fecha pedido</th>
+        <th>Acciones</th>
+        <th></th>
+
+    </tr>
+    </thead>
+    <tbody>
+        {% for ped in pedidos %}
+            <tr>
+
+                <td>{{ ped.identificador}}</td>
+                <td>{{ ped.fecha }}</td>
+
+                <td>
+
+                    <div class="buttons">
+                         <a href="/mispedidos/eliminar/{{ ped.id }}">
+                            <button id="eliminar" class="button is-primary">Eliminar</button>
+                        </a>
+                    </div>
+
+
+                 </td>
+                <td><a href="/mispedidos/productos/{{ ped.id }}">Mas detalles</a></td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include 'pie_pagina.html' %}

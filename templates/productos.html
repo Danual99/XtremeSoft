@@ -10,13 +10,20 @@
     {% block buscador %}
                 {% csrf_token %}
                 <form method="GET" action="{% url 'buscarproducto' %}">
-                    <div >
-                        <input type="text"  placeholder="Buscar..."  name="buscar" >
-                        <div >
-
+                    <div class="columns is-mobile is-centered" style="margin-bottom: 2%">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="text" placeholder=""  name="buscar">
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Buscar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
+
 
     {% endblock buscador %}
 
@@ -51,9 +58,10 @@
                     <a href="{% url 'editar_producto' id=prod.id %}" class="card-footer-item" >Editar</a>
                     <a href="{% url 'eliminar_producto'  id=prod.id%}" class="card-footer-item">Eliminar</a>
                     {% endif %}
-                    <a class="card-footer-item"><span class="icon is-small is-left">
-                        <i class="fa fa-border fa-shopping-cart"  style="margin-right: 20px"></i>
-                      </span>Añadir al carrito</a>
+                    <a href="{% url 'añadiralcarro' id=prod.id %}" class="card-footer-item"><span class="icon is-small is-left">
+                        <i class="fa fa-border fa-shopping-cart"  style="margin-right: 20px"></i></span>
+                        Añadir al carrito
+                    </a>
                 </div>
             </div>
         </div>

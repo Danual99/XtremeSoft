@@ -51,12 +51,12 @@
                 </a>
 
                 <a class="navbar-item">
-                    Menu
+                    Eventos
                 </a>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        More
+                        Más
                     </a>
 
                     <div class="navbar-dropdown">
@@ -71,14 +71,20 @@
                         </a>
                         {% if user.is_authenticated %}
 {#                        {% if user.rol == 'ADMIN' %}#}
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="{% url 'ver_empleados' %}">
-                            Empleados
-                        </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" href="{% url 'ver_empleados' %}">
+                                Empleados
+                            </a>
+                            <a class="navbar-item" href="{% url 'mispedidos' %}">
+                                Pedidos
+                            </a>
 {#                        {% endif %}#}
-                    {% endif %}
+                        {% endif %}
                     </div>
                 </div>
+                <a class="navbar-item" href="{% url 'carrito' %}">
+                    Carrito
+                </a>
             </div>
 
             <div class="navbar-end">

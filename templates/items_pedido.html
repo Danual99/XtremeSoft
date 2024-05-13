@@ -1,0 +1,35 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+<br>
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Artículos</p>
+</div>
+
+<table class="table" style="margin-left: 30%">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Total</th>
+
+    </tr>
+    </thead>
+    <tbody>
+        {% for items in producto_pedidos %}
+            <tr>
+
+                <td>{{ items.nombre}}</td>
+                <td>{{ items.cantidad }}</td>
+                <td>{{ items.precio }}</td>
+                <td>{{ items.total }}</td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include 'pie_pagina.html' %}

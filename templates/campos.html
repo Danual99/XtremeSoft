@@ -5,16 +5,22 @@
 {% include 'barra_navegacion.html' %}
 
 <div class="columns is-mobile is-centered">
-    <p class="title is-2">Campos de tiro</p>
+    <p class="title is-2" style="color:wheat; margin-top: 100px; margin-bottom: 100px;">Campos de tiro</p>
 </div>
 
     {% block buscador %}
                 {% csrf_token %}
                 <form method="GET" action="{% url 'buscarcampo' %}">
-                    <div >
-                        <input type="text"  placeholder="Buscar..."  name="buscar" >
-                        <div >
-
+                    <div class="columns is-mobile is-centered" style="margin-bottom: 2%">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="text" placeholder=""  name="buscar">
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Buscar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -65,5 +71,12 @@
         Nuevo Campo
     </button>
 </a>
+
+<style>
+    body{
+         background: rgb(2,0,36);
+        background: linear-gradient(to left, rgba(2,0,36,1), rgba(35,48,35,1) 50%,  rgba(96,126,118,1) 75%);
+    }
+</style>
 
 {% include 'pie_pagina.html' %}

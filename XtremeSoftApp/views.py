@@ -2,7 +2,11 @@ from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from .models import *
 from  django.contrib.auth import authenticate, login, logout
+from .carrito import *
+import random
+import string
 
+from .decorators import *
 # Create your views here.
 
 def inicio (request):
@@ -85,7 +89,10 @@ def ver_empleados(request):
 def editar_empleado (request, id):
     if request.method == 'GET':
         empleado = Empleado.objects.get(id=id)
-        return render(request, 'crear_empleado.html', {'producto':empleado})
+        campos = Campo_Tiro.objects.all()
+        ids_cammpos = empleado.campos.values_list('id', flat=True)
+
+        return render(request, 'crear_empleado.html', {'empleado':empleado, 'campos':campos, 'ids_campos':ids_cammpos})
     else:
         empleado = Empleado()
         empleado.id = id
@@ -95,6 +102,14 @@ def editar_empleado (request, id):
         empleado.mail= request.POST.get('mail_emp')
         empleado.image_url = request.POST.get('image_emp')
         Empleado.save(empleado)
+
+        lista_campos = request.POST.getlist('campos')
+        empleado.campos.clear()
+        for c in lista_campos:
+            campo = Campo_Tiro.objects.get(id=c)
+            empleado.campos.add(campo)
+
+
         return redirect('/lista_empleados')
 
 def eliminar_empleado(request, id):
@@ -115,6 +130,9 @@ def crear_usuario_empleado(request, id):
         usuario.password = make_password(empleado.codigo)
         usuario.rol = Rol.EMPLOYEE
         usuario.save()
+
+        empleado.usuario = usuario
+        empleado.save()
         return redirect('do_login')
     else:
         return redirect('lista_empleados/')
@@ -217,5 +235,132 @@ def do_login(request):
 def do_logout(request):
     logout(request)
     return redirect('inicio')
+
+def acceso_denegado(request):
+    return render(request, 'acceso_denegado.html')
+
+def ver_carrito(request):
+    carrito = Carrito()
+
+    if "carrito" in request.session:
+        carrito = carrito.from_dict(request.session["carrito"])
+
+    return render(request, "carrito_producto.html", {"carrito": carrito})
+
+def comprar_producto(request, id):
+    producto = Producto.objects.get(id=id)
+    carrito = Carrito()
+    list_producto = Producto.objects.all()
+
+    #Compruebo que en sesion esta la variable "carrito"
+    if "carrito" in request.session:
+        carrito = carrito.from_dict(request.session["carrito"])
+
+    #Compruebo que el producto esta en el carrito
+    if carrito.comprobar_producto_en_carrito(id):
+        producto_carrito = carrito.obtener_producto(id)
+        carrito.actualizar_producto(id, producto_carrito.cantidad + 1)
+    else:
+        producto_carrito = ProductoCarrito(producto.id, producto.nombre,producto.precio,1,producto.foto)
+        carrito.agregar_producto(producto_carrito)
+
+    request.session["carrito"] = carrito.to_dict()
+
+    return render(request, 'productos.html',{'productos': list_producto})
+
+def vaciar_carro(request):
+    carrito = Carrito()
+
+    if "carrito" in request.session:
+        carrito = carrito.vaciar_carrito()
+        del request.session["carrito"]
+
+    return render(request,"carrito_producto.html", {"carrito":carrito})
+
+def eliminar_producto_carro(request,id):
+    carrito = Carrito()
+
+    if "carrito" in request.session:
+        carrito = carrito.from_dict(request.session["carrito"])
+
+    if carrito.comprobar_producto_en_carrito(id):
+        carrito.eliminar_producto(id)
+
+    request.session["carrito"] = carrito.to_dict()
+
+    return render(request, 'carrito_producto.html', {"carrito": carrito})
+
+def sumar_producto_carro(request,id):
+    carrito = Carrito()
+
+    if "carrito" in request.session:
+        carrito = carrito.from_dict(request.session["carrito"])
+
+    if carrito.comprobar_producto_en_carrito(id):
+        producto_carrito = carrito.obtener_producto(id)
+        if producto_carrito.cantidad >= 1:
+            carrito.actualizar_producto(id, producto_carrito.cantidad + 1)
+
+    request.session["carrito"] = carrito.to_dict()
+
+    return render(request, 'carrito_producto.html', {"carrito": carrito})
+
+def restar_producto_carro(request,id):
+    carrito = Carrito()
+
+    if "carrito" in request.session:
+        carrito = carrito.from_dict(request.session["carrito"])
+
+    if carrito.comprobar_producto_en_carrito(id):
+        producto_carrito = carrito.obtener_producto(id)
+        if producto_carrito.cantidad > 1:
+            carrito.actualizar_producto(id, producto_carrito.cantidad - 1)
+
+
+    request.session["carrito"] = carrito.to_dict()
+
+    return render(request, 'carrito_producto.html', {"carrito":carrito})
+
+def hacer_pedido(request):
+    carrito = Carrito()
+    list_producto = Producto.objects.all()
+    if "carrito" in request.session:
+        carrito = carrito.from_dict(request.session["carrito"])
+
+    pedido = Pedido.objects.create(
+        identificador=''.join(random.choices(string.digits, k=8)),
+        usuario= request.user
+    )
+
+    for itemsCarrito in carrito.productos:
+        items = ItemsPedido.objects.create(
+            nombre= itemsCarrito.nombre,
+            cantidad= itemsCarrito.cantidad,
+            precio= itemsCarrito.precio,
+            total= itemsCarrito.precio * itemsCarrito.cantidad,
+            pedido= pedido
+        )
+        ItemsPedido.save(items)
+
+    return vaciar_carro(request)
+
+def listar_pedidos(request):
+    usuario = request.user
+    lista_pedidos = []
+
+    if usuario != None:
+        lista_pedidos = Pedido.objects.filter(usuario=usuario)
+    return render(request, 'pedidos_producto.html', {'pedidos': lista_pedidos})
+
+def eliminar_pedido(request,id):
+    pedido = Pedido.objects.get(id=id)
+    pedido.delete()
+    return listar_pedidos(request)
+
+def listar_productos_pedido(request,id):
+    pedido = Pedido.objects.get(id=id)
+    lista_producto_pedido = ItemsPedido.objects.filter(pedido=pedido)
+    return render(request, 'items_pedido.html', {'producto_pedidos': lista_producto_pedido})
+
 
 
