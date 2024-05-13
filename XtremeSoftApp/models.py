@@ -2,8 +2,7 @@ from django.contrib.auth.models import UserManager
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
-
-#Aqui vamos a crear clases como tablas de base de datos, todas ellas extienden models.model
+# Create your models here.
 
 class Rol(models.TextChoices):
     ADMIN = "ADMIN", "Administrador"
@@ -26,7 +25,6 @@ class Usuario(AbstractBaseUser):
     def __str__(self):
         return self.username, self.email
 
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -48,10 +46,6 @@ class UserManager(BaseUserManager):
             raise ValueError("Error. El campo is_superuser debe ser True")
 
         return self.create_user(email, password, **extra_fields)
-
-
-
-
 
 class Pedido(models.Model):
     id = models.AutoField(primary_key=True)
@@ -103,8 +97,10 @@ class Empleado(models.Model):
     usuario = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
     campos = models.ManyToManyField(Campo_Tiro, null=False)
 
+
     def __str__(self):
         return str(self.id) + " - " + self.nombre
+
 class Tramo_reserva(models.TextChoices):
     T1 = 1
     T2 = 2
@@ -133,3 +129,5 @@ class Evento(models.Model):
 
     def __str__(self):
         return self.nombre, self.fecha
+
+
