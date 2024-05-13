@@ -8,6 +8,19 @@
     <p class="title is-2" style="color:wheat; margin-top: 100px; margin-bottom: 100px;">Campos de tiro</p>
 </div>
 
+    {% block buscador %}
+                {% csrf_token %}
+                <form method="GET" action="{% url 'buscarcampo' %}">
+                    <div >
+                        <input type="text"  placeholder="Buscar..."  name="buscar" >
+                        <div >
+
+                        </div>
+                    </div>
+                </form>
+
+    {% endblock buscador %}
+
 {% for camp in campos %}
 
     {% if forloop.counter0|divisibleby:3 %}

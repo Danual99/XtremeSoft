@@ -47,6 +47,12 @@ def eliminar_producto(request, id):
         Producto.delete(producto)
         return redirect('/lista_productos')
 
+def buscar_productos(request):
+    nombre = request.GET.get("buscar")
+    productos = Producto.objects.filter(nombre__icontains=nombre)
+
+    return render(request, 'productos.html', {'productos': productos})
+
 
 def crear_empleado (request):
     if request.method == 'GET':
@@ -172,6 +178,12 @@ def eliminar_campo(request, id):
     if campo is not None:
         Campo_Tiro.delete(campo)
         return redirect('/lista_campos')
+
+def buscar_campos(request):
+    nombre = request.GET.get("buscar")
+    campos = Campo_Tiro.objects.filter(nombre__icontains=nombre)
+
+    return render(request, 'campos.html', {'campos': campos})
 
 
 
