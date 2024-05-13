@@ -4,6 +4,8 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
 
+#Aqui vamos a crear clases como tablas de base de datos, todas ellas extienden models.model
+
 class Rol(models.TextChoices):
     ADMIN = "ADMIN", "Administrador"
     CUSTOMER = "CUST", "Cliente"
@@ -24,6 +26,7 @@ class Usuario(AbstractBaseUser):
     REQUIRED_FIELDS = ['mail', "rol"]
     def __str__(self):
         return self.username, self.email
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -47,14 +50,6 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-class Pedido(models.Model):
-    id = models.AutoField(primary_key=True)
-    num_pedido = models.IntegerField()
-    fecha = models.DateTimeField(auto_now_add=True)
-    usuario = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.num_pedido, self.fecha
 
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
@@ -66,6 +61,12 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre, self.precio
 
+class Pedido(models.Model):
+    id = models.AutoField(primary_key=True)
+    identificador = models.IntegerField()
+    fecha = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE)
+
 class ItemsPedido(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=250)
@@ -73,10 +74,6 @@ class ItemsPedido(models.Model):
     precio = models.FloatField()
     total = models.FloatField()
     pedido = models.ForeignKey(Pedido, null=False, blank=False, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, null=False, blank=False, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre, self.total
 
 class Campo_Tiro(models.Model):
     id = models.AutoField(primary_key=True)
@@ -97,10 +94,8 @@ class Empleado(models.Model):
     usuario = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
     campos = models.ManyToManyField(Campo_Tiro, null=False)
 
-
     def __str__(self):
         return str(self.id) + " - " + self.nombre
-
 class Tramo_reserva(models.TextChoices):
     T1 = 1
     T2 = 2
@@ -129,5 +124,3 @@ class Evento(models.Model):
 
     def __str__(self):
         return self.nombre, self.fecha
-
-
