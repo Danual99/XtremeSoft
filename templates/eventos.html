@@ -18,15 +18,16 @@
     {% endif %}
 
 <div class="column is-one-third-desktop tarjeta_contendor">
-    <div class="card">
-        <div class="card-content">
+    <div class="card" style="background-image: url('{{ e.imagen_evento }}'); background-size: cover" >
+       <a href="{% url 'evento_detalles' id=e.id%}">
+           <div class="card-content" >
 
-            <div class="content">
+            <div class="content" >
                 <figure>
                     <img style="height: 400px; width: 400px"
-                         src="{{ e.imagen_evento }}"/>
+                         src="" />
                 </figure>
-
+              <div class="card-footer">
                 <a href="{% url 'editar_evento' id=e.id %}">
                     <button class="button is-normal button is-info">
                     Editar evento
@@ -37,9 +38,10 @@
                     Eliminar evento
                 </button>
                     </a>
-</div>
+              </div>
             </div>
-
+            </div>
+            </a>
 
         </div>
 

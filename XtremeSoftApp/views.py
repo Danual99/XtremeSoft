@@ -74,7 +74,11 @@ def crear_empleado (request):
 
 def ver_empleados(request):
     lista_empleados = Empleado.objects.all()
-    return render(request, 'empleados.html' ,{'empleados':lista_empleados})
+    campos = Campo_Tiro.objects.filter(empleado__campos__id=1)
+
+
+
+    return render(request, 'empleados.html' ,{'empleados':lista_empleados, 'campos':campos})
 
 def editar_empleado (request, id):
     if request.method == 'GET':
@@ -277,3 +281,7 @@ def eliminar_evento(request, id):
         Evento.delete(evento)
         return redirect('/lista_eventos')
 
+
+def evento_detalles(request, id):
+    evento = Evento.objects.get(id=id)
+    return render(request, 'evento_detalles.html', {'evento':evento})

@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+#
 urlpatterns = [
     path('', inicio, name='inicio'),
     path('nuevo_producto/', crear_producto, name='crear_producto'),
@@ -28,7 +28,8 @@ urlpatterns = [
     path('lista_eventos/', mostrar_eventos, name='mostrar_eventos'),
     path('nuevo_evento/', crear_evento, name='crear_evento'),
     path('editar_evento/<int:id>', editar_evento, name='editar_evento'),
-    path('eliminar_evento/<int:id>', eliminar_evento, name='eliminar_evento')
+    path('eliminar_evento/<int:id>', eliminar_evento, name='eliminar_evento'),
+    path('evento/detalle/<int:id>', evento_detalles, name='evento_detalles')
 
 
 
