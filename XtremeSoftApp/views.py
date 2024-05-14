@@ -422,3 +422,6 @@ def eliminar_evento(request, id):
 def evento_detalles(request, id):
     evento = Evento.objects.get(id=id)
     return render(request, 'evento_detalles.html', {'evento':evento})
+
+def ver_panel_administracion(request):
+    return render(request, 'panel_administrador.html')

@@ -45,7 +45,9 @@ urlpatterns = [
     path('nuevo_evento/', crear_evento, name='crear_evento'),
     path('editar_evento/<int:id>', editar_evento, name='editar_evento'),
     path('eliminar_evento/<int:id>', eliminar_evento, name='eliminar_evento'),
-    path('evento/detalle/<int:id>', evento_detalles, name='evento_detalles')
+    path('evento/detalle/<int:id>', evento_detalles, name='evento_detalles'),
+
+    path('panel_administracion/', ver_panel_administracion, name="ver_panel_administracion")
 
 
 
