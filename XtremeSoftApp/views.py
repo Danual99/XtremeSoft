@@ -425,3 +425,6 @@ def evento_detalles(request, id):
 
 def ver_panel_administracion(request):
     return render(request, 'panel_administrador.html')
+
+def ir_a_perfil_usuario(request):
+   return render(request, 'perfil_usuario.html')
