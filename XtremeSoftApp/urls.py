@@ -38,7 +38,7 @@ urlpatterns = [
     path('mispedidos/eliminar/<int:id>', eliminar_pedido, name="mispedidos"),
     path('mispedidos/productos/<int:id>', listar_productos_pedido, name="misproductos"),
 
-    path('acceso_denegado/', acceso_denegado, name='acceso_denegado')
+    path('acceso_denegado/', acceso_denegado, name='acceso_denegado'),
     path('acceso_denegado/', acceso_denegado, name='acceso_denegado'),
 
     path('lista_eventos/', mostrar_eventos, name='mostrar_eventos'),

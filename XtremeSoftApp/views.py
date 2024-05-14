@@ -406,6 +406,7 @@ def editar_evento(request, id):
         evento.fecha = request.POST.get('evento_fecha')
         evento.precio = float(request.POST.get('evento_precio'))
         evento.imagen_evento = request.POST.get('evento_imagen')
+        evento.descripcion = request.POST.get('evento_descripcion')
         evento.save()
         evento.campo_tiro.clear()
         evento.campo_tiro.set
