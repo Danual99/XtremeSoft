@@ -5,6 +5,7 @@ from  django.contrib.auth import authenticate, login, logout
 from .carrito import *
 import random
 import string
+from .decorators import user_required, role_required
 
 from .decorators import *
 # Create your views here.
@@ -239,6 +240,7 @@ def do_logout(request):
 def acceso_denegado(request):
     return render(request, 'acceso_denegado.html')
 
+@user_required
 def ver_carrito(request):
     carrito = Carrito()
 
@@ -247,6 +249,7 @@ def ver_carrito(request):
 
     return render(request, "carrito_producto.html", {"carrito": carrito})
 
+@user_required
 def comprar_producto(request, id):
     producto = Producto.objects.get(id=id)
     carrito = Carrito()

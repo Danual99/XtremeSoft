@@ -91,7 +91,7 @@
                 <div class="navbar-item">
                     <div class="buttons">
                          {% if user.is_authenticated %}
-                             <h1 style="margin-right: 20px; font-weight: bold; text-transform: uppercase;">Hola, </h1>
+                             <h1 style="margin-right: 20px; font-weight: bold; text-transform: uppercase;">Hola, {{ user.username }}</h1>
                              <a class="button is-light" href="{% url 'do_logout' %}">
                             Cerrar sesión
                             </a>
