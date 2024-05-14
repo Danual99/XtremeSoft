@@ -38,7 +38,18 @@ urlpatterns = [
     path('mispedidos/eliminar/<int:id>', eliminar_pedido, name="mispedidos"),
     path('mispedidos/productos/<int:id>', listar_productos_pedido, name="misproductos"),
 
-    path('acceso_denegado/', acceso_denegado, name='acceso_denegado')
+    path('acceso_denegado/', acceso_denegado, name='acceso_denegado'),
+    path('acceso_denegado/', acceso_denegado, name='acceso_denegado'),
+
+    path('lista_eventos/', mostrar_eventos, name='mostrar_eventos'),
+    path('nuevo_evento/', crear_evento, name='crear_evento'),
+    path('editar_evento/<int:id>', editar_evento, name='editar_evento'),
+    path('eliminar_evento/<int:id>', eliminar_evento, name='eliminar_evento'),
+    path('evento/detalle/<int:id>', evento_detalles, name='evento_detalles'),
+
+    path('panel_administracion/', ver_panel_administracion, name="ver_panel_administracion"),
+
+    path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario")
 
 
 

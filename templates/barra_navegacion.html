@@ -27,65 +27,70 @@
 
 {% block barra_navegacion %}
 
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand" >
+    <nav class="navbar" role="navigation" aria-label="main navigation" style=" box-shadow: 5px 5px 5px #aaaaaa;">
+        <div class="navbar-brand">
             <figure class="image is-128x128">
                 <a href="{% url 'inicio' %}">
-                    <img class="imageis-rounded" src="{% static  'img/xtremesoft_logo.png' %}" >
+                    <img class="imageis-rounded" src="{% static  'img/xtremesoft_logo.png' %}">
                 </a>
             </figure>
 
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-               data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
+{#            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"#}
+{#               data-target="navbarBasicExample">#}
+{#                <span aria-hidden="true"></span>#}
+{#                <span aria-hidden="true"></span>#}
+{#                <span aria-hidden="true"></span>#}
+{#                <span aria-hidden="true"></span>#}
+{#            </a>#}
         </div>
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-end">
-                <a class="navbar-item" href="{% url 'inicio' %}">
-                    Inicio
-                </a>
+                <a class="navbar-item" href="{% url 'inicio' %}"></a>
 
-                <a class="navbar-item">
-                    Eventos
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Más
+                    <a class="navbar-item" href="{% url 'ver_panel_administracion' %}">
+                        Panel Administración
                     </a>
 
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" href="{% url 'mostrar_productos' %}">
-                            Productos
+                    <a class="navbar-item" href="{% url 'ir_a_perfil_usuario' %}">
+                        Mi Perfil
+                    </a>
+
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Más
                         </a>
-                        <a class="navbar-item is-selected" href="{% url 'mostrar_campos' %}">
-                            Campos
-                        </a>
-                        <a class="navbar-item">
-                            Contact
-                        </a>
-                        {% if user.is_authenticated %}
-{#                        {% if user.rol == 'ADMIN' %}#}
-                            <hr class="navbar-divider">
-                            <a class="navbar-item" href="{% url 'ver_empleados' %}">
-                                Empleados
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="{% url 'mostrar_productos' %}">
+                                Productos
                             </a>
-                            <a class="navbar-item" href="{% url 'mispedidos' %}">
-                                Pedidos
+                            <a class="navbar-item is-selected" href="{% url 'mostrar_campos' %}">
+                                Campos
                             </a>
-{#                        {% endif %}#}
-                        {% endif %}
+                            <a class="navbar-item" href="{% url 'mostrar_eventos' %}">
+                                Eventos
+                            </a>
+                            {% if user.is_authenticated %}
+                                {#                        {% if user.rol == 'ADMIN' %}#}
+                                <hr class="navbar-divider">
+                                <a class="navbar-item" href="{% url 'ver_empleados' %}">
+                                    Empleados
+                                </a>
+                                <a class="navbar-item" href="{% url 'mispedidos' %}">
+                                    Pedidos
+                                </a>
+                                {#                        {% endif %}#}
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <a class="navbar-item" href="{% url 'carrito' %}">
-                    Carrito
-                </a>
+                    <a class="navbar-item" href="{% url 'carrito' %}">
+                        Carrito
+                    </a>
+
             </div>
+        </div>
+
 
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -95,18 +100,18 @@
                              <a class="button is-light" href="{% url 'do_logout' %}">
                             Cerrar sesión
                             </a>
-{#                            <span class="icon is-small is-left">#}
-{#                                <i class="fa fa-border fa-shopping-cart"></i>#}
-{#                             </span>#}
-                           {% else %}
-                        <a class="button is-primary" href="{% url 'registro_usuario' %}">
-                            <strong>Registrarse</strong>
-                        </a>
+                            {#                            <span class="icon is-small is-left">#}
+                            {#                                <i class="fa fa-border fa-shopping-cart"></i>#}
+                            {#                             </span>#}
+                        {% else %}
+                            <a class="button is-primary" href="{% url 'registro_usuario' %}">
+                                <strong>Registrarse</strong>
+                            </a>
 
-                        <a class="button is-light" href="{% url 'do_login' %}">
-                            Inicar sesión
-                        </a>
-                    {% endif %}
+                            <a class="button is-light" href="{% url 'do_login' %}">
+                                Iniciar sesión
+                            </a>
+                        {% endif %}
 
 
                     </div>

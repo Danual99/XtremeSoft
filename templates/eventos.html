@@ -4,4 +4,82 @@
 
 {% include 'barra_navegacion.html' %}
 
+<div class="columns is-mobile is-centered" style="margin-top: 100px; margin-bottom: 75px">
+    <p class="title is-2" style="color:wheat">Próximos eventos</p>
+</div>
+
+{% for e in eventos %}
+
+    {% if forloop.counter0|divisibleby:3 %}
+        {% if not forloop.first %}
+            </div> <!-- Cerrar el contenedor columns si no es el primer elemento -->
+        {% endif %}
+        <div class="columns"> <!-- Abrir un nuevo contenedor columns cada 3 elementos -->
+    {% endif %}
+
+<div class="column is-one-third-desktop tarjeta_contendor">
+    <div class="card" style="background-image: url('{{ e.imagen_evento }}'); background-size: cover" >
+       <a href="{% url 'evento_detalles' id=e.id%}">
+           <div class="card-content" >
+
+            <div class="content" >
+                <figure>
+                    <img style="height: 400px; width: 400px"
+                         src="" />
+                </figure>
+              <div class="card-footer">
+                <a href="{% url 'editar_evento' id=e.id %}">
+                    <button class="button is-normal button is-info">
+                    Editar evento
+                </button>
+                </a>
+                <a href="{% url 'eliminar_evento' id=e.id %}">
+                    <button class="button is-normal button is-info">
+                    Eliminar evento
+                </button>
+                    </a>
+              </div>
+            </div>
+            </div>
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+
+{% if forloop.last %}
+    </div> <!-- Asegurarse de cerrar el contenedor columns al final -->
+{% endif %}
+
+
+{% endfor %}
+
+
+<a href="{% url 'crear_evento' %}">
+    <button class="button is-normal button is-info">
+        Nuevo evento
+    </button>
+</a>
+
+<style>
+    body {
+        background-image: url("https://milsim.fullmetal.es/build/assets/bg-granite.6f7397a4.webp");
+    }
+
+    .card {
+        transition: transform .2s;
+        width: 400px;
+        height: 500px;
+        margin: 100px;
+
+    }
+
+    .card:hover {
+        transform: scale(1.1);
+    }
+</style>
+
 {% include 'pie_pagina.html' %}

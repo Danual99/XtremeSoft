@@ -367,3 +367,67 @@ def listar_productos_pedido(request,id):
 
 
 
+def mostrar_eventos(request):
+    lista_eventos = Evento.objects.all()
+    return render(request, 'eventos.html', {'eventos':lista_eventos})
+
+def crear_evento(request):
+    if request.method == 'GET':
+        campos = Campo_Tiro.objects.all()
+        return render(request, 'crear_evento.html', {'campos':campos})
+    else:
+        nuevo_evento = Evento()
+        nuevo_evento.nombre = request.POST.get("evento_nombre")
+        nuevo_evento.imagen_evento = request.POST.get("evento_imagen")
+        nuevo_evento.precio = float(request.POST.get("evento_precio"))
+        nuevo_evento.fecha = request.POST.get("evento_fecha")
+
+        nuevo_evento.save()
+
+        campos = request.POST.getlist("evento_campo")
+
+        for c in campos:
+            campo = Campo_Tiro.objects.get(id=c)
+            nuevo_evento.campo_tiro.add(campo)
+
+
+        return redirect("mostrar_eventos")
+
+
+
+def editar_evento(request, id):
+    if request.method == 'GET':
+        eventos = Evento.objects.get(id=id)
+        campos = Campo_Tiro.objects.all()
+        id_campo = eventos.campo_tiro.values_list('id', flat=True)
+        return render(request, 'crear_evento.html', {'eventos':eventos, 'campos':campos, 'id_campo':id_campo})
+    else:
+        evento = Evento()
+
+        evento.id = id
+        evento.nombre = request.POST.get('evento_nombre')
+        evento.fecha = request.POST.get('evento_fecha')
+        evento.precio = float(request.POST.get('evento_precio'))
+        evento.imagen_evento = request.POST.get('evento_imagen')
+        evento.descripcion = request.POST.get('evento_descripcion')
+        evento.save()
+        evento.campo_tiro.clear()
+        evento.campo_tiro.set
+        return redirect('/lista_eventos')
+
+def eliminar_evento(request, id):
+    evento = Evento.objects.get(id=id)
+    if evento is not None:
+        Evento.delete(evento)
+        return redirect('/lista_eventos')
+
+
+def evento_detalles(request, id):
+    evento = Evento.objects.get(id=id)
+    return render(request, 'evento_detalles.html', {'evento':evento})
+
+def ver_panel_administracion(request):
+    return render(request, 'panel_administrador.html')
+
+def ir_a_perfil_usuario(request):
+   return render(request, 'perfil_usuario.html')

@@ -1,0 +1,94 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Nuevo evento</p>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="evento_nombre" class="subtitle is-5"> Nombre</label>
+                </div>
+                <div class="column">
+                    <input id="name_emp" value="{{ eventos.nombre }}" name="evento_nombre" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+          <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="evento_fecha" class="subtitle is-5"> Fecha evento</label>
+                </div>
+                <div class="column">
+                    <input id="date_emp" value="{{ eventos.fecha|date:'Y-m-d' }}" name="evento_fecha" type="date" class="input" placeholder="">
+                </div>
+            </div>
+
+         <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="price" class="subtitle is-5"> Precio</label>
+                </div>
+                <div class="column">
+                    <input id="price" value="{{ eventos.precio}}"  step="0.01" name="evento_precio" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="image_emp" class="subtitle is-5"> Imagen </label>
+                </div>
+                <div class="column">
+                    <input id="image" value="{{ eventos.imagen_evento }}" name="evento_imagen" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+         <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="image_emp" class="subtitle is-5"> Descripción </label>
+                </div>
+                <div class="column">
+                    <textarea class="textarea" name="evento_descripcion" type="input" class="input" placeholder="">{{ eventos.descripcion }}</textarea>
+                </div>
+            </div>
+
+
+         <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                     <label for="campo" class="subtitle is-5"> Campo</label>
+                </div>
+                <div class="column">
+                    <div class="select">
+                        <select id="shop" name="evento_campo" multiple>
+                             {% for c in campos %}
+                                {% if c.id in id_campo %}
+                                    <option value="{{ c.id }}" selected>{{ c.nombre }}</option>
+                                {% else %}
+                                    <option value="{{ c.id }}">{{ c.nombre }}</option>
+                                {% endif %}
+                             {% endfor %}
+                         </select>
+
+                    </div>
+                </div>
+          </div>
+
+
+
+            <div class="columns is-mobile is-centered">
+                <input class="button is-info is-light" type="submit" style="margin-top: 150px" value="Crear evento">
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+{% include 'pie_pagina.html' %}
