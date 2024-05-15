@@ -423,8 +423,37 @@ def evento_detalles(request, id):
     evento = Evento.objects.get(id=id)
     return render(request, 'evento_detalles.html', {'evento':evento})
 
+
+
 def ver_panel_administracion(request):
     return render(request, 'panel_administrador.html')
 
 def ir_a_perfil_usuario(request):
    return render(request, 'perfil_usuario.html')
+
+def reservar_evento(request, id):
+    if request.method =='GET':
+        evento = Evento.objects.get(id=id)
+        tramos = Tramo_reserva.values
+        campos = Campo_Tiro.objects.all()
+        precio_evento = evento.precio
+        fecha_evento = evento.fecha
+        return render(request, 'reservar_evento.html', {'tramos':tramos, 'campos':campos, 'precio_evento':precio_evento, 'fecha_evento':fecha_evento})
+    else:
+        reserva_evento = Reserva()
+        reserva_evento.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
+        reserva_evento.evento_id = id
+        reserva_evento.precio_reserva = request.POST.get('precio_reserva')
+        reserva_evento.jugador = request.user
+        reserva_evento.fecha = request.POST.get('fecha_reserva')
+        reserva_evento.num_jugadores= request.POST.get('num_jugadores')
+
+
+
+        reserva_evento.save()
+        return redirect('/inicio')
+
+
+
+
+

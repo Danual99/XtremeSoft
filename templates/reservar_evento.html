@@ -1,0 +1,78 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Reservar evento</p>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="date_emp" class="subtitle is-5"> Fecha</label>
+                </div>
+                <div class="column">
+                    <input id="date_emp" value="{{ fecha_evento|date:'Y-m-d'  }}" name="fecha_reserva" type="date" class="input" placeholder="">
+                </div>
+            </div>
+
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="price" class="subtitle is-5"> Numero de jugadores</label>
+                </div>
+                <div class="column">
+                    <input id="price" value="" name="num_jugadores" type="number" class="input" placeholder="">
+                </div>
+            </div>
+
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="image" class="subtitle is-5"> Precio</label>
+                </div>
+                <div class="column">
+                    <input id="image" value="{{ precio_evento }}" step="0.01" name="precio_reserva" type="text" class="input" placeholder="">
+                </div>
+            </div>
+
+
+
+                <div class="columns is-multiline is-mobile" style="margin-bottom: 80px">
+                <div class="column is-one-quarter has-text-centered" style="margin-bottom: 80px">
+                    <label for="campo" class="subtitle is-5"> Tramo horario</label>
+                </div>
+                <div class="column">
+                    <div class="select">
+                        <select id="tramo_reserva" name="tramo_reserva">
+                            {% for t in tramos %}
+                            {#                                {% if c.id in ids_campos %}#}
+                                <option value="{{ t }}">{{ t }}</option>
+                            {#                                {% else %}#}
+                            {#                                    <option value="{{ c.id }}">{{ c.nombre }}</option>#}
+                            {#                                {% endif %}#}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="columns is-mobile is-centered">
+                <input class="button is-info is-light" type="submit">
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+
+{% include 'pie_pagina.html' %}

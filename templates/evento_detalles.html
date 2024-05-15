@@ -17,7 +17,7 @@
       </div>
       <div class="product-price-btn">
         <p>Precio del evento: <span>{{ evento.precio }}</span> €</p>
-        <button type="button">¡Apúntate ya!</button>
+          <a href="{% url 'reservar_evento' id=evento.id %}"><button type="button">¡Apúntate ya!</button></a>
       </div>
     </div>
   </div>

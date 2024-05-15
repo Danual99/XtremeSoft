@@ -48,8 +48,9 @@ urlpatterns = [
     path('evento/detalle/<int:id>', evento_detalles, name='evento_detalles'),
 
     path('panel_administracion/', ver_panel_administracion, name="ver_panel_administracion"),
+    path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario"),
 
-    path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario")
+    path('reservar/evento/<int:id>', reservar_evento, name="reservar_evento")
 
 
 
