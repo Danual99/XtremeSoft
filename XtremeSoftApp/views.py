@@ -378,6 +378,7 @@ def crear_evento(request):
         nuevo_evento.imagen_evento = request.POST.get("evento_imagen")
         nuevo_evento.precio = float(request.POST.get("evento_precio"))
         nuevo_evento.fecha = request.POST.get("evento_fecha")
+        nuevo_evento.aforo = request.POST.get("evento_aforo")
 
         nuevo_evento.save()
 
@@ -407,6 +408,7 @@ def editar_evento(request, id):
         evento.precio = float(request.POST.get('evento_precio'))
         evento.imagen_evento = request.POST.get('evento_imagen')
         evento.descripcion = request.POST.get('evento_descripcion')
+        evento.aforo = request.POST.get("evento_aforo")
         evento.save()
         evento.campo_tiro.clear()
         evento.campo_tiro.set
@@ -452,6 +454,25 @@ def reservar_evento(request, id):
 
         reserva_evento.save()
         return redirect('/inicio')
+
+def reservar_campo(request, id):
+    if request.method == 'GET':
+        campo = Campo_Tiro.objects.get(id=id)
+        tramos = Tramo_reserva.values
+        return render(request, 'reservar_campo.html', {'campo': campo, 'tramos': tramos})
+    else:
+        reserva_campo = Reserva()
+        reserva_campo.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
+        reserva_campo.evento_id = id
+        reserva_campo.precio_reserva = request.POST.get('precio_reserva')
+        reserva_campo.jugador = request.user
+        reserva_campo.fecha = request.POST.get('fecha_reserva')
+        reserva_campo.num_jugadores = request.POST.get('num_jugadores')
+
+        reserva_campo.save()
+
+        return redirect('/inicio')
+
 
 
 

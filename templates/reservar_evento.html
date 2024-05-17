@@ -4,16 +4,16 @@
 
 {% include 'barra_navegacion.html' %}
 
-<div class="columns is-mobile is-centered">
+<div class="columns is-mobile is-centered" style="margin-top: 50px; margin-bottom: 50px; background-color: wheat; width: 70%; margin-left: 15%">
     <p class="title is-2">Reservar evento</p>
 </div>
 
 <div class="columns is-mobile is-centered">
     <div class="column is-half">
-        <form action="" method="post">
+        <form action="" method="post" style="background-color: white; border-radius: 10px; margin-bottom: 60px">
             {% csrf_token %}
 
-            <div class="columns is-multiline is-mobile">
+            <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
                 <div class="column is-one-quarter has-text-centered">
                     <label for="date_emp" class="subtitle is-5"> Fecha</label>
                 </div>
@@ -23,7 +23,7 @@
             </div>
 
 
-            <div class="columns is-multiline is-mobile">
+            <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
                 <div class="column is-one-quarter has-text-centered">
                     <label for="price" class="subtitle is-5"> Numero de jugadores</label>
                 </div>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="columns is-multiline is-mobile">
+            <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
                 <div class="column is-one-quarter has-text-centered">
                     <label for="image" class="subtitle is-5"> Precio</label>
                 </div>
@@ -41,9 +41,17 @@
                 </div>
             </div>
 
+          <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
+                <div class="column is-one-quarter has-text-centered">
+                    <label for="date_emp" class="subtitle is-5"> Fecha nacimiento</label>
+                </div>
+                <div class="column">
+                    <input id="date_emp" value="{{ request.user.birthdate|date:'Y-m-d' }}" name="date_emp" type="date" class="input" placeholder="">
+                </div>
+            </div>
 
 
-                <div class="columns is-multiline is-mobile" style="margin-bottom: 80px">
+                <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
                 <div class="column is-one-quarter has-text-centered" style="margin-bottom: 80px">
                     <label for="campo" class="subtitle is-5"> Tramo horario</label>
                 </div>
@@ -76,3 +84,9 @@
 
 
 {% include 'pie_pagina.html' %}
+
+<style>
+    body{
+        background-image: url("https://milsim.fullmetal.es/build/assets/bg-ops.0da01608.webp");
+    }
+</style>

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import UserManager
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.utils import timezone
 
 
 # Create your models here.
@@ -17,6 +18,7 @@ class Usuario(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(unique=True, max_length=255)
     rol = models.CharField(max_length=15, choices=Rol.choices, default=Rol.CUSTOMER)
+    birthdate = models.DateField(null=False, default=timezone.datetime.today)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -115,6 +117,7 @@ class Evento(models.Model):
     fecha = models.DateField(null=False)
     precio = models.FloatField(null=False)
     descripcion = models.TextField(max_length=900)
+    aforo = models.IntegerField(null=False, default=0)
     imagen_evento = models.CharField(max_length=900, default=True)
     campo_tiro = models.ManyToManyField(Campo_Tiro, null=False, blank=False)
 
