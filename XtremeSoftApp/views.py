@@ -1,10 +1,15 @@
+from datetime import date
+
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from .models import *
 from  django.contrib.auth import authenticate, login, logout
 from .carrito import *
 import random
 import string
+from django.contrib import messages
 
 from .decorators import *
 # Create your views here.
@@ -193,6 +198,7 @@ def registro_usuario(request):
     else:
         username = request.POST.get('username')
         email = request.POST.get('email')
+        birthdate = request.POST.get('birthdate')
         password = request.POST.get('password')
         repeat_password = request.POST.get('repeat_password')
 
@@ -209,12 +215,13 @@ def registro_usuario(request):
         if existe_email:
             errors.append("Ya existe un usuario con ese email")
 
-        if len(errors) != 0:
-            return render(request, 'registro.html', {"errores":errors, "username": username, "email":email})
+            if len(errors) != 0:
+                return render(request, 'registro.html', {"errores":errors, "username": username, "email":email, 'birthdate':birthdate})
         else:
-            user = Usuario.objects.create(username=username, password=make_password(password), email=email)
+            user = Usuario.objects.create(username=username, password=make_password(password), email=email, birthdate=birthdate)
             user.save()
-            return redirect('inicio')
+
+            return redirect('do_login')
 
 
 def do_login(request):
@@ -442,18 +449,40 @@ def reservar_evento(request, id):
         fecha_evento = evento.fecha
         return render(request, 'reservar_evento.html', {'tramos':tramos, 'campos':campos, 'precio_evento':precio_evento, 'fecha_evento':fecha_evento})
     else:
+        # user = request.user
+        # birthdate = date(user.birthdate)
+        # fecha_nacimiento =
+        # fecha = date.today()
+        # edad =fecha.year - birthdate.year
+        #
+        # if edad <18:
+        #     messages.success(request, "Debes ser mayor de 18 para poder inscribirte")
+        #     return redirect(reverse('reservar_evento', args=[id]))
         reserva_evento = Reserva()
         reserva_evento.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
         reserva_evento.evento_id = id
         reserva_evento.precio_reserva = request.POST.get('precio_reserva')
         reserva_evento.jugador = request.user
         reserva_evento.fecha = request.POST.get('fecha_reserva')
-        reserva_evento.num_jugadores= request.POST.get('num_jugadores')
+        reserva_evento.num_jugadores= int(request.POST.get('num_jugadores'))
 
+        if reserva_evento.tramo_horario is None or reserva_evento.num_jugadores is None:
+            messages.success(request, "Debes indicar el tramo horario y el número de jugadores")
+            return redirect(reverse('reservar_evento', args=[id]))
 
+        reserva_num_personas = reserva_evento.num_jugadores
+        evento = Evento.objects.get(id=id)
+        aforo = evento.aforo
+        if reserva_num_personas > aforo:
+            messages.success(request, "El número de jugadores excede el aforo")
+            return redirect(reverse('reservar_evento', args=[id]))
+
+        if Reserva.objects.filter(tramo_horario=reserva_evento.tramo_horario, fecha=reserva_evento.fecha):
+            messages.success(request, "El tramo horario ya está cogido para esa fecha")
+            return redirect(reverse('reservar_evento', args=[id]))
 
         reserva_evento.save()
-        return redirect('/inicio')
+        return redirect('/')
 
 def reservar_campo(request, id):
     if request.method == 'GET':
