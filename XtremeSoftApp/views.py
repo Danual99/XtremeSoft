@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
@@ -473,36 +473,35 @@ def reservar_evento(request, id):
                       {'tramos': tramos, 'campos': campos, 'precio_evento': precio_evento,
                        'fecha_evento': fecha_evento})
     else:
-        # user = request.user
-        # birthdate = date(user.birthdate)
-        # fecha_nacimiento =
-        # fecha = date.today()
-        # edad =fecha.year - birthdate.year
-        #
-        # if edad <18:
-        #     messages.success(request, "Debes ser mayor de 18 para poder inscribirte")
-        #     return redirect(reverse('reservar_evento', args=[id]))
+        user = request.user
+        birthdate = user.birthdate
+        fecha = date.today()
+        edad =int((fecha - birthdate).days/365.25)
+        if edad <18:
+            messages.success(request, "Debes ser mayor de 18 para poder inscribirte")
+            return redirect(reverse('reservar_evento', args=[id]))
+
         reserva_evento = Reserva()
         reserva_evento.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
         reserva_evento.evento_id = id
         reserva_evento.precio_reserva = request.POST.get('precio_reserva')
         reserva_evento.jugador = request.user
         reserva_evento.fecha = request.POST.get('fecha_reserva')
+
+
         reserva_evento.num_jugadores = int(request.POST.get('num_jugadores'))
+        evento = Evento.objects.get(id=id)
+        aforo = evento.aforo
+        reserva =Reserva.objects.get(evento_id=reserva_evento.evento_id)
+        num_jugadores = reserva.num_jugadores
+
+        if Reserva.objects.filter(tramo_horario=reserva_evento.tramo_horario, fecha=reserva_evento.fecha):
+            if num_jugadores + reserva_evento.num_jugadores > aforo:
+                messages.success(request, "El número de jugadores excede el aforo")
+                return redirect(reverse('reservar_evento', args=[id]))
 
         if reserva_evento.tramo_horario is None or reserva_evento.num_jugadores is None:
             messages.success(request, "Debes indicar el tramo horario y el número de jugadores")
-            return redirect(reverse('reservar_evento', args=[id]))
-
-        reserva_num_personas = reserva_evento.num_jugadores
-        evento = Evento.objects.get(id=id)
-        aforo = evento.aforo
-        if reserva_num_personas > aforo:
-            messages.success(request, "El número de jugadores excede el aforo")
-            return redirect(reverse('reservar_evento', args=[id]))
-
-        if Reserva.objects.filter(tramo_horario=reserva_evento.tramo_horario, fecha=reserva_evento.fecha):
-            messages.success(request, "El tramo horario ya está cogido para esa fecha")
             return redirect(reverse('reservar_evento', args=[id]))
 
         reserva_evento.save()
@@ -515,16 +514,35 @@ def reservar_campo(request, id):
         tramos = Tramo_reserva.values
         return render(request, 'reservar_campo.html', {'campo': campo, 'tramos': tramos})
     else:
+        user = request.user
+        birthdate = user.birthdate
+        fecha = date.today()
+        edad = int((fecha - birthdate).days / 365.25)
+        if edad < 18:
+            messages.success(request, "Debes ser mayor de 18 para poder inscribirte")
+            return redirect(reverse('reservar_evento', args=[id]))
+
         reserva_campo = Reserva()
         reserva_campo.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
         campo = Campo_Tiro.objects.get(id=id)
         reserva_campo.campo_tiro_id = campo.id
         reserva_campo.jugador = request.user
         reserva_campo.fecha = request.POST.get('fecha_reserva')
-        reserva_campo.num_jugadores = request.POST.get('num_jugadores')
+        reserva_campo.num_jugadores = int(request.POST.get('num_jugadores'))
+
         campo = Campo_Tiro.objects.get(id=id)
-        precio_campo = float(campo.precio)
-        reserva_campo.precio_reserva = float(reserva_campo.num_jugadores) * precio_campo
+        aforo = campo.aforo
+        reserva = Reserva.objects.get(campo_tiro_id=reserva_campo.campo_tiro_id)
+        num_jugadores = reserva.num_jugadores
+
+        if Reserva.objects.filter(tramo_horario=reserva_campo.tramo_horario, fecha=reserva_campo.fecha):
+            if num_jugadores + reserva_campo.num_jugadores > aforo:
+                messages.success(request, "El número de jugadores excede el aforo")
+                return redirect(reverse('reservar_evento', args=[id]))
+
+        campo = Campo_Tiro.objects.get(id=id)
+        reserva_campo.precio_campo = float(campo.precio)
+        reserva_campo.precio_reserva = float(reserva_campo.num_jugadores) * reserva_campo.precio_campo
 
 
         if reserva_campo.tramo_horario is None or reserva_campo.num_jugadores is None:
@@ -536,10 +554,6 @@ def reservar_campo(request, id):
         aforo = campo.aforo
         if reserva_num_personas > aforo:
             messages.success(request, "El número de jugadores excede el aforo")
-            return redirect(reverse('reservar_campo', args=[id]))
-
-        if Reserva.objects.filter(tramo_horario=reserva_campo.tramo_horario, fecha=reserva_campo.fecha):
-            messages.success(request, "El tramo horario ya está cogido para esa fecha")
             return redirect(reverse('reservar_campo', args=[id]))
 
         reserva_campo.save()

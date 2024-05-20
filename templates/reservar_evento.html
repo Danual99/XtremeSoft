@@ -44,11 +44,12 @@
                     <div class="select">
                         <select id="tramo_reserva" name="tramo_reserva">
                             {% for t in tramos %}
-                            {#                                {% if c.id in ids_campos %}#}
+{#                                {% if t.value == 1 %}#}
                                 <option value="{{ t }}">{{ t }}</option>
-                            {#                                {% else %}#}
+
+
                             {#                                    <option value="{{ c.id }}">{{ c.nombre }}</option>#}
-                            {#                                {% endif %}#}
+{#                                {% endif %}#}
                             {% endfor %}
                         </select>
 
