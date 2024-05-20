@@ -87,6 +87,7 @@ class Campo_Tiro(models.Model):
     aforo = models.IntegerField(null=False)
     nombre = models.CharField(max_length=200)
     localizacion = models.CharField(max_length=300)
+    precio = models.FloatField(null=False, default=10.0)
 
     def __str__(self):
         return self.nombre
