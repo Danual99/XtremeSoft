@@ -5,29 +5,33 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
-from  django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout
 from .carrito import *
 import random
 import string
 from django.contrib import messages
 
 from .decorators import *
+
+
 # Create your views here.
 
-def inicio (request):
-    return render(request,'inicio.html')
+def inicio(request):
+    return render(request, 'inicio.html')
+
 
 def mostrar_productos(request):
     lista_productos = Producto.objects.all()
-    return render(request, "productos.html",  {'productos': lista_productos})
+    return render(request, "productos.html", {'productos': lista_productos})
 
-def crear_producto (request):
-    if request.method=='GET':
-        lista_productos=Producto.objects.all()
-        return render(request,'crear_producto.html', {'productos': lista_productos})
+
+def crear_producto(request):
+    if request.method == 'GET':
+        lista_productos = Producto.objects.all()
+        return render(request, 'crear_producto.html', {'productos': lista_productos})
     else:
         nuevo_producto = Producto()
-        nuevo_producto.nombre=request.POST.get("name")
+        nuevo_producto.nombre = request.POST.get("name")
         nuevo_producto.descripcion = request.POST.get("descripcion")
         nuevo_producto.precio = float(request.POST.get("price"))
         nuevo_producto.foto = request.POST.get("image")
@@ -35,10 +39,10 @@ def crear_producto (request):
         return redirect("/lista_productos")
 
 
-def editar_producto (request, id):
+def editar_producto(request, id):
     if request.method == 'GET':
         producto = Producto.objects.get(id=id)
-        return render(request, 'crear_producto.html', {'producto':producto})
+        return render(request, 'crear_producto.html', {'producto': producto})
     else:
         producto = Producto()
         producto.id = id
@@ -56,6 +60,7 @@ def eliminar_producto(request, id):
         Producto.delete(producto)
         return redirect('/lista_productos')
 
+
 def buscar_productos(request):
     nombre = request.GET.get("buscar")
     productos = Producto.objects.filter(nombre__icontains=nombre)
@@ -63,10 +68,10 @@ def buscar_productos(request):
     return render(request, 'productos.html', {'productos': productos})
 
 
-def crear_empleado (request):
+def crear_empleado(request):
     if request.method == 'GET':
         lista_campos = Campo_Tiro.objects.all()
-        return render(request, 'crear_empleado.html',{'campos':lista_campos})
+        return render(request, 'crear_empleado.html', {'campos': lista_campos})
     else:
         empleado = Empleado()
         empleado.nombre = request.POST.get('name_emp')
@@ -84,27 +89,29 @@ def crear_empleado (request):
             campo = Campo_Tiro.objects.get(id=c)
             empleado.campos.add(campo)
 
-
         return redirect('/lista_empleados/')
+
 
 def ver_empleados(request):
     lista_empleados = Empleado.objects.all()
-    return render(request, 'empleados.html' ,{'empleados':lista_empleados})
+    return render(request, 'empleados.html', {'empleados': lista_empleados})
 
-def editar_empleado (request, id):
+
+def editar_empleado(request, id):
     if request.method == 'GET':
         empleado = Empleado.objects.get(id=id)
         campos = Campo_Tiro.objects.all()
         ids_cammpos = empleado.campos.values_list('id', flat=True)
 
-        return render(request, 'crear_empleado.html', {'empleado':empleado, 'campos':campos, 'ids_campos':ids_cammpos})
+        return render(request, 'crear_empleado.html',
+                      {'empleado': empleado, 'campos': campos, 'ids_campos': ids_cammpos})
     else:
         empleado = Empleado()
         empleado.id = id
         empleado.nombre = request.POST.get('name_emp')
         empleado.fecha_nacimiento = request.POST.get('date_emp')
         empleado.codigo = request.POST.get('code_emp')
-        empleado.mail= request.POST.get('mail_emp')
+        empleado.mail = request.POST.get('mail_emp')
         empleado.image_url = request.POST.get('image_emp')
         Empleado.save(empleado)
 
@@ -114,8 +121,8 @@ def editar_empleado (request, id):
             campo = Campo_Tiro.objects.get(id=c)
             empleado.campos.add(campo)
 
-
         return redirect('/lista_empleados')
+
 
 def eliminar_empleado(request, id):
     empleado = Empleado.objects.get(id=id)
@@ -124,13 +131,12 @@ def eliminar_empleado(request, id):
         return redirect('/lista_empleados')
 
 
-
 def crear_usuario_empleado(request, id):
     empleado = Empleado.objects.get(id=id)
 
     if empleado.usuario is None:
         usuario = Usuario()
-        usuario.username = empleado.nombre.replace(" ","_")
+        usuario.username = empleado.nombre.replace(" ", "_")
         usuario.email = empleado.mail
         usuario.password = make_password(empleado.codigo)
         usuario.rol = Rol.EMPLOYEE
@@ -143,18 +149,19 @@ def crear_usuario_empleado(request, id):
         return redirect('lista_empleados/')
 
 
-
 def mostrar_registro(request):
     return render(request, 'registro.html')
 
+
 def mostrar_campos(request):
     lista_campos = Campo_Tiro.objects.all()
-    return render(request, "campos.html",  {'campos': lista_campos})
+    return render(request, "campos.html", {'campos': lista_campos})
 
-def crear_campo (request):
-    if request.method=='GET':
+
+def crear_campo(request):
+    if request.method == 'GET':
         lista_campos = Campo_Tiro.objects.all()
-        return render(request,'crear_campo_tiro.html', {'campos': lista_campos})
+        return render(request, 'crear_campo_tiro.html', {'campos': lista_campos})
     else:
         nuevo_campo = Campo_Tiro()
         nuevo_campo.nombre = request.POST.get("nombre")
@@ -164,7 +171,8 @@ def crear_campo (request):
         nuevo_campo.save()
         return redirect("/lista_campos")
 
-def editar_campo (request,id):
+
+def editar_campo(request, id):
     if request.method == 'GET':
         campos = Campo_Tiro.objects.get(id=id)
         return render(request, 'crear_campo_tiro.html', {'campos': campos})
@@ -178,18 +186,19 @@ def editar_campo (request,id):
         Campo_Tiro.save(campos)
         return redirect('/lista_campos')
 
+
 def eliminar_campo(request, id):
     campo = Campo_Tiro.objects.get(id=id)
     if campo is not None:
         Campo_Tiro.delete(campo)
         return redirect('/lista_campos')
 
+
 def buscar_campos(request):
     nombre = request.GET.get("buscar")
     campos = Campo_Tiro.objects.filter(nombre__icontains=nombre)
 
     return render(request, 'campos.html', {'campos': campos})
-
 
 
 def registro_usuario(request):
@@ -206,7 +215,7 @@ def registro_usuario(request):
         if password != repeat_password:
             errors.append("Las contraseñas no coinciden")
 
-        existe_usuario =Usuario.objects.filter(username=username).exists()
+        existe_usuario = Usuario.objects.filter(username=username).exists()
         if existe_usuario:
             errors.append("Ya existe un usuario con ese nombre")
 
@@ -216,9 +225,11 @@ def registro_usuario(request):
             errors.append("Ya existe un usuario con ese email")
 
             if len(errors) != 0:
-                return render(request, 'registro.html', {"errores":errors, "username": username, "email":email, 'birthdate':birthdate})
+                return render(request, 'registro.html',
+                              {"errores": errors, "username": username, "email": email, 'birthdate': birthdate})
         else:
-            user = Usuario.objects.create(username=username, password=make_password(password), email=email, birthdate=birthdate)
+            user = Usuario.objects.create(username=username, password=make_password(password), email=email,
+                                          birthdate=birthdate)
             user.save()
 
             return redirect('do_login')
@@ -239,12 +250,15 @@ def do_login(request):
 
     return render(request, "inicio_sesion.html")
 
+
 def do_logout(request):
     logout(request)
     return redirect('inicio')
 
+
 def acceso_denegado(request):
     return render(request, 'acceso_denegado.html')
+
 
 def ver_carrito(request):
     carrito = Carrito()
@@ -254,26 +268,28 @@ def ver_carrito(request):
 
     return render(request, "carrito_producto.html", {"carrito": carrito})
 
+
 def comprar_producto(request, id):
     producto = Producto.objects.get(id=id)
     carrito = Carrito()
     list_producto = Producto.objects.all()
 
-    #Compruebo que en sesion esta la variable "carrito"
+    # Compruebo que en sesion esta la variable "carrito"
     if "carrito" in request.session:
         carrito = carrito.from_dict(request.session["carrito"])
 
-    #Compruebo que el producto esta en el carrito
+    # Compruebo que el producto esta en el carrito
     if carrito.comprobar_producto_en_carrito(id):
         producto_carrito = carrito.obtener_producto(id)
         carrito.actualizar_producto(id, producto_carrito.cantidad + 1)
     else:
-        producto_carrito = ProductoCarrito(producto.id, producto.nombre,producto.precio,1,producto.foto)
+        producto_carrito = ProductoCarrito(producto.id, producto.nombre, producto.precio, 1, producto.foto)
         carrito.agregar_producto(producto_carrito)
 
     request.session["carrito"] = carrito.to_dict()
 
-    return render(request, 'productos.html',{'productos': list_producto})
+    return render(request, 'productos.html', {'productos': list_producto})
+
 
 def vaciar_carro(request):
     carrito = Carrito()
@@ -282,9 +298,10 @@ def vaciar_carro(request):
         carrito = carrito.vaciar_carrito()
         del request.session["carrito"]
 
-    return render(request,"carrito_producto.html", {"carrito":carrito})
+    return render(request, "carrito_producto.html", {"carrito": carrito})
 
-def eliminar_producto_carro(request,id):
+
+def eliminar_producto_carro(request, id):
     carrito = Carrito()
 
     if "carrito" in request.session:
@@ -297,7 +314,8 @@ def eliminar_producto_carro(request,id):
 
     return render(request, 'carrito_producto.html', {"carrito": carrito})
 
-def sumar_producto_carro(request,id):
+
+def sumar_producto_carro(request, id):
     carrito = Carrito()
 
     if "carrito" in request.session:
@@ -312,7 +330,8 @@ def sumar_producto_carro(request,id):
 
     return render(request, 'carrito_producto.html', {"carrito": carrito})
 
-def restar_producto_carro(request,id):
+
+def restar_producto_carro(request, id):
     carrito = Carrito()
 
     if "carrito" in request.session:
@@ -323,10 +342,10 @@ def restar_producto_carro(request,id):
         if producto_carrito.cantidad > 1:
             carrito.actualizar_producto(id, producto_carrito.cantidad - 1)
 
-
     request.session["carrito"] = carrito.to_dict()
 
-    return render(request, 'carrito_producto.html', {"carrito":carrito})
+    return render(request, 'carrito_producto.html', {"carrito": carrito})
+
 
 def hacer_pedido(request):
     carrito = Carrito()
@@ -336,20 +355,21 @@ def hacer_pedido(request):
 
     pedido = Pedido.objects.create(
         identificador=''.join(random.choices(string.digits, k=8)),
-        usuario= request.user
+        usuario=request.user
     )
 
     for itemsCarrito in carrito.productos:
         items = ItemsPedido.objects.create(
-            nombre= itemsCarrito.nombre,
-            cantidad= itemsCarrito.cantidad,
-            precio= itemsCarrito.precio,
-            total= itemsCarrito.precio * itemsCarrito.cantidad,
-            pedido= pedido
+            nombre=itemsCarrito.nombre,
+            cantidad=itemsCarrito.cantidad,
+            precio=itemsCarrito.precio,
+            total=itemsCarrito.precio * itemsCarrito.cantidad,
+            pedido=pedido
         )
         ItemsPedido.save(items)
 
     return vaciar_carro(request)
+
 
 def listar_pedidos(request):
     usuario = request.user
@@ -359,26 +379,28 @@ def listar_pedidos(request):
         lista_pedidos = Pedido.objects.filter(usuario=usuario)
     return render(request, 'pedidos_producto.html', {'pedidos': lista_pedidos})
 
-def eliminar_pedido(request,id):
+
+def eliminar_pedido(request, id):
     pedido = Pedido.objects.get(id=id)
     pedido.delete()
     return listar_pedidos(request)
 
-def listar_productos_pedido(request,id):
+
+def listar_productos_pedido(request, id):
     pedido = Pedido.objects.get(id=id)
     lista_producto_pedido = ItemsPedido.objects.filter(pedido=pedido)
     return render(request, 'items_pedido.html', {'producto_pedidos': lista_producto_pedido})
 
 
-
 def mostrar_eventos(request):
     lista_eventos = Evento.objects.all()
-    return render(request, 'eventos.html', {'eventos':lista_eventos})
+    return render(request, 'eventos.html', {'eventos': lista_eventos})
+
 
 def crear_evento(request):
     if request.method == 'GET':
         campos = Campo_Tiro.objects.all()
-        return render(request, 'crear_evento.html', {'campos':campos})
+        return render(request, 'crear_evento.html', {'campos': campos})
     else:
         nuevo_evento = Evento()
         nuevo_evento.nombre = request.POST.get("evento_nombre")
@@ -395,9 +417,7 @@ def crear_evento(request):
             campo = Campo_Tiro.objects.get(id=c)
             nuevo_evento.campo_tiro.add(campo)
 
-
         return redirect("mostrar_eventos")
-
 
 
 def editar_evento(request, id):
@@ -405,7 +425,7 @@ def editar_evento(request, id):
         eventos = Evento.objects.get(id=id)
         campos = Campo_Tiro.objects.all()
         id_campo = eventos.campo_tiro.values_list('id', flat=True)
-        return render(request, 'crear_evento.html', {'eventos':eventos, 'campos':campos, 'id_campo':id_campo})
+        return render(request, 'crear_evento.html', {'eventos': eventos, 'campos': campos, 'id_campo': id_campo})
     else:
         evento = Evento()
 
@@ -421,6 +441,7 @@ def editar_evento(request, id):
         evento.campo_tiro.set
         return redirect('/lista_eventos')
 
+
 def eliminar_evento(request, id):
     evento = Evento.objects.get(id=id)
     if evento is not None:
@@ -430,24 +451,27 @@ def eliminar_evento(request, id):
 
 def evento_detalles(request, id):
     evento = Evento.objects.get(id=id)
-    return render(request, 'evento_detalles.html', {'evento':evento})
-
+    return render(request, 'evento_detalles.html', {'evento': evento})
 
 
 def ver_panel_administracion(request):
     return render(request, 'panel_administrador.html')
 
+
 def ir_a_perfil_usuario(request):
-   return render(request, 'perfil_usuario.html')
+    return render(request, 'perfil_usuario.html')
+
 
 def reservar_evento(request, id):
-    if request.method =='GET':
+    if request.method == 'GET':
         evento = Evento.objects.get(id=id)
         tramos = Tramo_reserva.values
         campos = Campo_Tiro.objects.all()
         precio_evento = evento.precio
         fecha_evento = evento.fecha
-        return render(request, 'reservar_evento.html', {'tramos':tramos, 'campos':campos, 'precio_evento':precio_evento, 'fecha_evento':fecha_evento})
+        return render(request, 'reservar_evento.html',
+                      {'tramos': tramos, 'campos': campos, 'precio_evento': precio_evento,
+                       'fecha_evento': fecha_evento})
     else:
         # user = request.user
         # birthdate = date(user.birthdate)
@@ -464,7 +488,7 @@ def reservar_evento(request, id):
         reserva_evento.precio_reserva = request.POST.get('precio_reserva')
         reserva_evento.jugador = request.user
         reserva_evento.fecha = request.POST.get('fecha_reserva')
-        reserva_evento.num_jugadores= int(request.POST.get('num_jugadores'))
+        reserva_evento.num_jugadores = int(request.POST.get('num_jugadores'))
 
         if reserva_evento.tramo_horario is None or reserva_evento.num_jugadores is None:
             messages.success(request, "Debes indicar el tramo horario y el número de jugadores")
@@ -484,6 +508,7 @@ def reservar_evento(request, id):
         reserva_evento.save()
         return redirect('/')
 
+
 def reservar_campo(request, id):
     if request.method == 'GET':
         campo = Campo_Tiro.objects.get(id=id)
@@ -492,18 +517,31 @@ def reservar_campo(request, id):
     else:
         reserva_campo = Reserva()
         reserva_campo.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
-        reserva_campo.evento_id = id
-        reserva_campo.precio_reserva = request.POST.get('precio_reserva')
+        campo = Campo_Tiro.objects.get(id=id)
+        reserva_campo.campo_tiro_id = campo.id
         reserva_campo.jugador = request.user
         reserva_campo.fecha = request.POST.get('fecha_reserva')
         reserva_campo.num_jugadores = request.POST.get('num_jugadores')
+        campo = Campo_Tiro.objects.get(id=id)
+        precio_campo = float(campo.precio)
+        reserva_campo.precio_reserva = float(reserva_campo.num_jugadores) * precio_campo
+
+
+        if reserva_campo.tramo_horario is None or reserva_campo.num_jugadores is None:
+            messages.success(request, "Debes indicar el tramo horario y el número de jugadores")
+            return redirect(reverse('reservar_campo', args=[id]))
+
+        reserva_num_personas = int(reserva_campo.num_jugadores)
+        campo = Campo_Tiro.objects.get(id=id)
+        aforo = campo.aforo
+        if reserva_num_personas > aforo:
+            messages.success(request, "El número de jugadores excede el aforo")
+            return redirect(reverse('reservar_campo', args=[id]))
+
+        if Reserva.objects.filter(tramo_horario=reserva_campo.tramo_horario, fecha=reserva_campo.fecha):
+            messages.success(request, "El tramo horario ya está cogido para esa fecha")
+            return redirect(reverse('reservar_campo', args=[id]))
 
         reserva_campo.save()
 
-        return redirect('/inicio')
-
-
-
-
-
-
+        return redirect('/')
