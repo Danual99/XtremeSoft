@@ -118,7 +118,7 @@ class Evento(models.Model):
     nombre = models.CharField(max_length=300)
     fecha = models.DateField(null=False)
     precio = models.FloatField(null=False)
-    descripcion = models.TextField(max_length=900)
+    descripcion = models.TextField(max_length=900, default="")
     imagen_evento = models.CharField(max_length=900, default=True)
     campo_tiro = models.ManyToManyField(Campo_Tiro, null=False, blank=False)
 

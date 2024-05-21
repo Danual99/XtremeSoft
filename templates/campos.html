@@ -53,8 +53,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{% url 'editar_campo_de_tiro' id=camp.id %}" class="card-footer-item" >Editar</a>
-                    <a href="{% url 'eliminar_campo_de_tiro'  id=camp.id%}" class="card-footer-item">Eliminar</a>
+
                 </div>
             </div>
         </div>
@@ -66,11 +65,6 @@
 {% endfor %}
 
 
-<a href="{% url 'crear_campo_de_tiro' %}">
-    <button class="button is-normal button is-info">
-        Nuevo Campo
-    </button>
-</a>
 
 <style>
     body{

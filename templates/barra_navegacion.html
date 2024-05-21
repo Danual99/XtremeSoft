@@ -47,14 +47,17 @@
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-end">
                 <a class="navbar-item" href="{% url 'inicio' %}"></a>
-
+                    {% if user.is_staff %}
                     <a class="navbar-item" href="{% url 'ver_panel_administracion' %}">
                         Panel Administración
                     </a>
+                    {% endif %}
 
+                    {% if user.is_authenticated %}
                     <a class="navbar-item" href="{% url 'ir_a_perfil_usuario' %}">
                         Mi Perfil
                     </a>
+                    {% endif %}
 
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
@@ -72,14 +75,12 @@
                                 Eventos
                             </a>
                             {% if user.is_authenticated %}
-                                {#                        {% if user.rol == 'ADMIN' %}#}
+
                                 <hr class="navbar-divider">
                                 <a class="navbar-item" href="{% url 'ver_empleados' %}">
                                     Empleados
                                 </a>
-                                <a class="navbar-item" href="{% url 'mispedidos' %}">
-                                    Pedidos
-                                </a>
+
                                 {#                        {% endif %}#}
                             {% endif %}
                         </div>

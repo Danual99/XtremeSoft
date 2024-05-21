@@ -4,100 +4,86 @@
 
 {% include 'barra_navegacion.html' %}
 
-<h2>Tabs</h2>
-<p>Click on the buttons inside the tabbed menu:</p>
+<h1 class="title" style="margin-left: 5%; margin-top: 1%">Tu Perfil</h1>
 
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'London')">London</button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+
+<div class="columns" style="margin-bottom: 10%; margin-top: 3%">
+    <div class="column">
+      <div>
+          <h1 class="subtitle" style="margin-left: 5%">Nombre</h1>
+          <h1 style="margin-left: 5%" >{{ user.username }}</h1>
+      </div>
+    </div>
+    <div class="column">
+      <div>
+          <h1 class="subtitle" >Email</h1>
+          <h1 >{{ user.email }}</h1>
+      </div>
+    </div>
+
+    <div class="column">
+        <h1 class="subtitle">Acciones</h1>
+        <div class="columns is-mobile">
+              <div class="column " >
+                  <a href="{% url 'mispedidos' %}">
+                      <button class="button" >Pedidos</button>
+                  </a>
+              </div>
+              <div class="column">
+                    <a href="">
+                      <button class="button" >Eventos</button>
+                    </a>
+              </div>
+              <div class="column">
+                  <a href="">
+                      <button class="button" >Reservas</button>
+                  </a>
+              </div>
+        </div>
+    </div>
 </div>
 
-<div id="London" class="tabcontent">
-  <h3>London</h3>
-  <p>London is the capital city of England.</p>
-</div>
 
-<div id="Paris" class="tabcontent">
-  <h3>Paris</h3>
-  <p>Paris is the capital of France.</p>
-</div>
-
-<div id="Tokyo" class="tabcontent">
-  <h3>Tokyo</h3>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
-
-<script>
-function openCity(evt, cityName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+<style>
+.button {
+  position: relative;
+  background-color: #04AA6D;
+  border: none;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 20px;
+  width: 100px;
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
 }
-</script>
+
+.button:after {
+  content: "";
+  background: #90EE90;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px!important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+</style>
+
+
 
 
 {% include 'pie_pagina.html' %}
 
-<style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: #fff;
-  font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  color: rgba(0,0,0,0.6);
-}
-
-
-
-body {font-family: Arial;}
-
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-</style>

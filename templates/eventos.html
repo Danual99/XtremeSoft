@@ -28,16 +28,7 @@
                          src="" />
                 </figure>
               <div class="card-footer">
-                <a href="{% url 'editar_evento' id=e.id %}">
-                    <button class="button is-normal button is-info">
-                    Editar evento
-                </button>
-                </a>
-                <a href="{% url 'eliminar_evento' id=e.id %}">
-                    <button class="button is-normal button is-info">
-                    Eliminar evento
-                </button>
-                    </a>
+
               </div>
             </div>
             </div>
@@ -57,12 +48,6 @@
 
 {% endfor %}
 
-
-<a href="{% url 'crear_evento' %}">
-    <button class="button is-normal button is-info">
-        Nuevo evento
-    </button>
-</a>
 
 <style>
     body {

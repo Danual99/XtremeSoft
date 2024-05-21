@@ -429,5 +429,18 @@ def evento_detalles(request, id):
 def ver_panel_administracion(request):
     return render(request, 'panel_administrador.html')
 
+def mostrar_productos_admin(request):
+    lista_productos = Producto.objects.all()
+    return render(request, "panel_administrador_productos.html",  {'productos': lista_productos})
+
+def mostrar_eventos_admin(request):
+    lista_eventos = Evento.objects.all()
+    return render(request, 'panel_administrador_eventos.html', {'eventos':lista_eventos})
+
+def mostrar_campos_admin(request):
+    lista_campos = Campo_Tiro.objects.all()
+    return render(request, "panel_administrador_campos.html",  {'campos': lista_campos})
+
 def ir_a_perfil_usuario(request):
    return render(request, 'perfil_usuario.html')
+

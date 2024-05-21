@@ -35,7 +35,7 @@ urlpatterns = [
     path('carrito/hacerpedido/', hacer_pedido, name="hacerpedido"),
 
     path('mispedidos/', listar_pedidos, name="mispedidos"),
-    path('mispedidos/eliminar/<int:id>', eliminar_pedido, name="mispedidos"),
+    path('mispedidos/eliminar/<int:id>', eliminar_pedido, name="eliminar_pedidos"),
     path('mispedidos/productos/<int:id>', listar_productos_pedido, name="misproductos"),
 
     path('acceso_denegado/', acceso_denegado, name='acceso_denegado'),
@@ -48,6 +48,9 @@ urlpatterns = [
     path('evento/detalle/<int:id>', evento_detalles, name='evento_detalles'),
 
     path('panel_administracion/', ver_panel_administracion, name="ver_panel_administracion"),
+    path('panel_administracion/productos', mostrar_productos_admin, name="ver_productos_administracion"),
+    path('panel_administracion/eventos', mostrar_eventos_admin, name="ver_eventos_administracion"),
+    path('panel_administracion/campos', mostrar_campos_admin, name="ver_campos_administracion"),
 
     path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario")
 
