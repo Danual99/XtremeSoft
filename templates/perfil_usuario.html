@@ -20,6 +20,12 @@
           <h1 >{{ user.email }}</h1>
       </div>
     </div>
+    <div class="column">
+      <div>
+          <h1 class="subtitle" >Fecha de Nacimiento</h1>
+          <h1 >{{ user.birthdate }}</h1>
+      </div>
+    </div>
 
     <div class="column">
         <h1 class="subtitle">Acciones</h1>
@@ -29,13 +35,9 @@
                       <button class="button" >Pedidos</button>
                   </a>
               </div>
+
               <div class="column">
-                    <a href="">
-                      <button class="button" >Eventos</button>
-                    </a>
-              </div>
-              <div class="column">
-                  <a href="">
+                  <a href="{% url 'misreservas' %}">
                       <button class="button" >Reservas</button>
                   </a>
               </div>

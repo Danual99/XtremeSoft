@@ -491,6 +491,10 @@ def mostrar_campos_admin(request):
     lista_campos = Campo_Tiro.objects.all()
     return render(request, "panel_administrador_campos.html",  {'campos': lista_campos})
 
+def mostrar_reservas_admin(request):
+    lista_reservas = Reserva.objects.all()
+    return render(request, "panel_administrador_reservas.html",  {'reservas': lista_reservas})
+
 def ir_a_perfil_usuario(request):
     return render(request, 'perfil_usuario.html')
 
@@ -525,10 +529,11 @@ def reservar_evento(request, id):
         reserva_evento.num_jugadores = int(request.POST.get('num_jugadores'))
         evento = Evento.objects.get(id=id)
         aforo = evento.aforo
-        reserva =Reserva.objects.get(evento_id=reserva_evento.evento_id)
-        num_jugadores = reserva.num_jugadores
+
 
         if Reserva.objects.filter(tramo_horario=reserva_evento.tramo_horario, fecha=reserva_evento.fecha):
+            reserva = Reserva.objects.filter(evento_id=reserva_evento.evento_id)
+            num_jugadores = reserva.num_jugadores
             if num_jugadores + reserva_evento.num_jugadores > aforo:
                 messages.success(request, "El número de jugadores excede el aforo")
                 return redirect(reverse('reservar_evento', args=[id]))
@@ -566,15 +571,17 @@ def reservar_campo(request, id):
         s =datetime.strptime(s, "%Y-%m-%d").date()
         if s < date.today():
             messages.success(request, "Fecha incorrecta. La fecha es anterior a la fecha actual")
+            return redirect(reverse('reservar_campo', args=[id]))
 
         reserva_campo.num_jugadores = int(request.POST.get('num_jugadores'))
 
         campo = Campo_Tiro.objects.get(id=id)
         aforo = campo.aforo
-        reserva = Reserva.objects.get(campo_tiro_id=reserva_campo.campo_tiro_id)
-        num_jugadores = reserva.num_jugadores
+
 
         if Reserva.objects.filter(tramo_horario=reserva_campo.tramo_horario, fecha=reserva_campo.fecha):
+            reserva = Reserva.objects.filter(campo_tiro_id=reserva_campo.campo_tiro_id)
+            num_jugadores = reserva.num_jugadores
             if num_jugadores + reserva_campo.num_jugadores > aforo:
                 messages.success(request, "El número de jugadores excede el aforo")
                 return redirect(reverse('reservar_evento', args=[id]))
@@ -598,4 +605,24 @@ def reservar_campo(request, id):
         reserva_campo.save()
 
         return redirect('/')
+
+def eliminar_reserva(request, id):
+    reserva = Reserva.objects.get(id=id)
+    if reserva is not None:
+        Reserva.delete(reserva)
+        return redirect('/panel_administracion/reservas')
+
+def listar_reservas(request):
+    usuario = request.user
+    lista_reservas = []
+
+    if usuario != None:
+        lista_reservas = Reserva.objects.filter(jugador_id=usuario)
+    return render(request, 'mostrar_reservas.html', {'reservas': lista_reservas})
+
+def eliminar_reserva_user(request, id):
+    reserva = Reserva.objects.get(id=id)
+    if reserva is not None:
+        Reserva.delete(reserva)
+        return listar_reservas(request)
 

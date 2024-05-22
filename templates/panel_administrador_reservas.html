@@ -76,41 +76,38 @@
 
             <div class="report-container">
                 <div class="report-header">
-                    <h1 class="recent-Articles">Eventos</h1>
-                    <a href="{% url 'crear_evento' %}">
-                        <button class="button is-normal button is-info">
-                            Nuevo evento
-                        </button>
-                    </a>
+                    <h1 class="recent-Articles">Reservas</h1>
+
                 </div>
 
                 <div class="report-body">
                     <div class="report-topic-heading">
-                        <h3 class="t-op">Foto</h3>
-                        <h3 class="t-op">Nombre</h3>
-                        <h3 class="t-op">Precio</h3>
+                        <h3 class="t-op">Fecha</h3>
+                        <h3 class="t-op">Num Jugadores</h3>
+                        <h3 class="t-op">Precio Reserva</h3>
                         <h3 class="t-op">ID</h3>
-                        <h3 class="t-op">Editar</h3>
+                        <h3 class="t-op">Campo</h3>
+                        <h3 class="t-op">Jugador</h3>
+                        <h3 class="t-op">Evento</h3>
+                        <h3 class="t-op">Tramo Horario</h3>
                         <h3 class="t-op">Eliminar</h3>
                     </div>
 
                     <div class="items">
-                        {% for ev in eventos %}
+                        {% for res in reservas %}
 
                         <div class="item1">
-                            <h3 class="t-op-nextlvl">
-                                    <img src="{{ ev.imagen_evento }}" style="width: 70px"/>
-                            </h3>
-                            <h3 class="t-op-nextlvl">{{ ev.nombre }}</h3>
-                            <h3 class="t-op-nextlvl">{{ ev.precio }}</h3>
-                            <h3 class="t-op-nextlvl ">{{ ev.id }}</h3>
+                            <h3 class="t-op-nextlvl">{{ res.fecha }}</h3>
+                            <h3 class="t-op-nextlvl">{{ res.num_jugadores }}</h3>
+                            <h3 class="t-op-nextlvl ">{{ res.precio_reserva }}</h3>
+                            <h3 class="t-op-nextlvl ">{{ res.id }}</h3>
+                            <h3 class="t-op-nextlvl ">{{ res.campo_tiro_id }}</h3>
+                            <h3 class="t-op-nextlvl ">{{ res.jugador_id }}</h3>
+                            <h3 class="t-op-nextlvl ">{{ res.evento_id }}</h3>
+                            <h3 class="t-op-nextlvl ">{{ res.tramo_horario }}</h3>
+
                             <h3 class="t-op-nextlvl ">
-                                <a href="{% url 'editar_evento' id=ev.id %}">
-                                    <img src="/static/img/icons8-editar-50.png"/>
-                                </a>
-                            </h3>
-                            <h3 class="t-op-nextlvl ">
-                                <a href="{% url 'eliminar_evento'  id=ev.id%}">
+                                <a href="{% url 'eliminar_reserva'  id=res.id%}">
                                     <img src="/static/img/icons8-basura-llena-48.png"/>
                                 </a>
                             </h3>

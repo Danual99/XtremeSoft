@@ -1,0 +1,52 @@
+{% load bulma_tags %}
+{% load static bulma_tags %}
+{% load static %}
+
+{% include 'barra_navegacion.html' %}
+<br>
+<div class="columns is-mobile is-centered">
+    <p class="title is-2">Reservas</p>
+</div>
+
+<table class="table" style="margin-left: 30%">
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Num Jugadores</th>
+        <th>Precio</th>
+        <th>Campo Tiro</th>
+        <th>Evento</th>
+        <th>Tramo Horario</th>
+        <th></th>
+
+    </tr>
+    </thead>
+    <tbody>
+        {% for res in reservas %}
+            <tr>
+
+                <td>{{ res.fecha}}</td>
+                <td>{{ res.num_jugadores}}</td>
+                <td>{{ res.precio_reserva}}</td>
+                <td>{{ res.campo_tiro_id}}</td>
+                <td>{{ res.evento_id}}</td>
+                <td>{{ res.tramo_horario}}</td>
+
+                <td>
+
+                    <div class="buttons">
+                         <a href="/reservar/eliminar/user{{ res.id }}">
+                            <button id="eliminar" class="button is-primary">Eliminar</button>
+                        </a>
+                    </div>
+
+
+                 </td>
+
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include 'pie_pagina.html' %}

@@ -51,12 +51,17 @@ urlpatterns = [
     path('panel_administracion/productos', mostrar_productos_admin, name="ver_productos_administracion"),
     path('panel_administracion/eventos', mostrar_eventos_admin, name="ver_eventos_administracion"),
     path('panel_administracion/campos', mostrar_campos_admin, name="ver_campos_administracion"),
+    path('panel_administracion/reservas', mostrar_reservas_admin, name="ver_reservas_administracion"),
 
     path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario"),
 
 
     path('reservar/evento/<int:id>', reservar_evento, name="reservar_evento"),
     path('reservar/campo/<int:id>', reservar_campo, name="reservar_campo"),
+    path('reservar/eliminar/<int:id>', eliminar_reserva, name="eliminar_reserva"),
+
+    path('misreservas/', listar_reservas, name="misreservas"),
+    path('reservar/eliminar/user<int:id>', eliminar_reserva_user, name="eliminar_reserva_user"),
 
 
 
