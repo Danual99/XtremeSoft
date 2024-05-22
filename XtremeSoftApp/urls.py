@@ -52,7 +52,12 @@ urlpatterns = [
     path('panel_administracion/eventos', mostrar_eventos_admin, name="ver_eventos_administracion"),
     path('panel_administracion/campos', mostrar_campos_admin, name="ver_campos_administracion"),
 
-    path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario")
+    path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario"),
+
+
+    path('reservar/evento/<int:id>', reservar_evento, name="reservar_evento"),
+    path('reservar/campo/<int:id>', reservar_campo, name="reservar_campo"),
+
 
 
 

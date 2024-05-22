@@ -4,4 +4,100 @@
 
 {% include 'barra_navegacion.html' %}
 
+<div class="columns is-mobile is-centered" style="margin-top: 50px; margin-bottom: 50px; background-color: wheat; width: 70%; margin-left: 15%">
+    <p class="title is-2">Reservar campo</p>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-half">
+        <form action="" method="post" style="background-color: white; border-radius: 10px; margin-bottom: 60px">
+            {% csrf_token %}
+            <div class="formulario-campos">
+                <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
+                     <div class="column is-one-quarter has-text-centered">
+                        <label for="fecha_reserva" class="subtitle is-5"> Fecha</label>
+                    </div>
+                    <div class="column">
+                        <input id="date_emp" value="" name="fecha_reserva" type="date" class="input" placeholder="">
+                    </div>
+                </div>
+                   <div class="columns is-multiline is-mobile"
+                     style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
+                    <div class="column is-one-quarter has-text-centered">
+                        <label for="" class="subtitle is-5"> Campo</label>
+                    </div>
+                    <div class="column">
+                        <input id="date_emp" value="{{ campo.nombre }}" name="" type="text" class="input"
+                               placeholder="">
+                    </div>
+                </div>
+                 <div class="columns is-multiline is-mobile"
+                     style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
+                    <div class="column is-one-quarter has-text-centered">
+                        <label for="num_jugadores" class="subtitle is-5"> Numero de jugadores</label>
+                    </div>
+                    <div class="column">
+                        <input id="price" value="" name="num_jugadores" type="number" class="input" placeholder="">
+                    </div>
+                </div>
+
+                <div class="columns is-multiline is-mobile" style="padding-top: 10px;padding-left: 20px; padding-right: 20px">
+                    <div class="column is-one-quarter has-text-centered" style="margin-bottom: 80px">
+                          <label for="campo" class="subtitle is-5"> Tramo horario</label>
+                    </div>
+                    <div class="column">
+                        <div class="select">
+                            <select id="tramo_reserva" name="tramo_reserva">
+                                  {% for tramo in tramos %}
+                                        <option value="{{ tramo }}">{{ tramo }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="columns is-mobile is-centered">
+                 <input class="button is-info is-light" type="submit">
+            </div>
+        </form>
+    </div>
+</div>
+{% if messages %}
+<div class="disclaimer-box" style="margin-top: 10px">
+
+    {% for m in messages %}
+        <p style="color:white; text-transform: capitalize">{{ m }}</p>
+    {% endfor %}
+</div>
+{% endif %}
 {% include 'pie_pagina.html' %}
+
+
+<style>
+
+    body {
+        background-image: url("https://milsim.fullmetal.es/build/assets/bg-ops.0da01608.webp");
+    }
+
+    .disclaimer-box {
+       background-color: darkgoldenrod; /* Light red */
+    border-color: #f5c6cb; /* Red */
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 20px;
+    margin-bottom: 20px;
+    }
+
+    .disclaimer-box h2 {
+        color: #721c24; /* Dark red */
+        margin-top: 0;
+    }
+
+    .disclaimer-box p {
+        color: #721c24; /* Dark red */
+        margin-bottom: 0;
+    }
+
+</style>

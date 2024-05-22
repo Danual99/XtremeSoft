@@ -23,6 +23,18 @@
                     </p>
                 </div>
 
+                   <div class="inputBox">
+                    <label class="label" for="username">Birthdate</label>
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="date" placeholder="Text input" name="birthdate"
+                               value="{{ birthdate }}">
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-user"></i>
+                      </span>
+                    </p>
+                </div>
+
+
                 <div class="inputBox">
                     <label class="label" for="email">Email</label>
                     <p class="control has-icons-left has-icons-right">
@@ -61,7 +73,14 @@
     </section>
 
 </form>
+{% if messages %}
+<div class="disclaimer-box" style="margin-top: 10px">
 
+    {% for m in messages %}
+        <p style="color:white; text-transform: capitalize">{{ m }}</p>
+    {% endfor %}
+</div>
+{% endif %}
 
 <div class="mensaje_error">
     {% for e in errores %}
@@ -70,9 +89,32 @@
 
     {% endfor %}
 </div>
+
+
 {% include 'pie_pagina.html' %}
 
 <style>
+ .disclaimer-box {
+    background-color: darkgoldenrod; /* Light red */
+    border-color: #f5c6cb; /* Red */
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 20px;
+     margin-top: 0;
+     margin-bottom: 0;
+
+}
+
+.disclaimer-box h2 {
+    color: #721c24; /* Dark red */
+    margin-top: 0;
+}
+
+.disclaimer-box p {
+    color: #721c24; /* Dark red */
+    margin-bottom: 0;
+}
 
     .mensaje_error{
         color: wheat;
@@ -97,7 +139,6 @@
 
 
         overflow: hidden;
-        overflow: hidden;
         background: url("/static/img/fondo_formulario.jpg");
          background-size: cover;
         background-repeat: no-repeat;
@@ -115,14 +156,6 @@
     section span {
         position: relative;
 
-
-        /*display: block;*/
-        /*width: calc(6.25vw - 2px);*/
-        /*height: calc(6.25vw - 2px);*/
-        /*background: #181818;*/
-
-        /*z-index: 2;*/
-        /*transition: 1.5s;*/
     }
 
 
