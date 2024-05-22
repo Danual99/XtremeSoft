@@ -1,17 +1,18 @@
-from datetime import date, timedelta
-
+from datetime import date, datetime
+from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from .carrito import *
 import random
 import string
-from django.contrib import messages
-
+import re
+from django.core.mail import send_mail
+from django.conf import settings
 from .decorators import *
+
 
 
 # Create your views here.
@@ -202,18 +203,30 @@ def buscar_campos(request):
 
 
 def registro_usuario(request):
+    errors = []
     if request.method == 'GET':
         return render(request, 'registro.html')
     else:
         username = request.POST.get('username')
         email = request.POST.get('email')
+        dominios =['gmail.com', 'yahoo.com', 'outlook.com', 'protonmail.com', 'mail.com','fincainc.com', 'javnoi.com']
+        dominio_valido = email.split('@')[-1]
+        if dominio_valido not in dominios:
+            errors.append(f"Debes usar un email con algunos de los siguientes dominios: {', '.join(dominios)}")
+
         birthdate = request.POST.get('birthdate')
         password = request.POST.get('password')
         repeat_password = request.POST.get('repeat_password')
 
-        errors = []
-        if password != repeat_password:
+
+        contiene_numero = any(char.isdigit() for char in password)
+        contiene_caracter_especial = bool(re.search(r'[_\-*@]', password))
+        if len(password) < 8:
+            errors.append("Las contraseñas debe tener al menos 8 caracteres")
+        elif password != repeat_password:
             errors.append("Las contraseñas no coinciden")
+        elif not contiene_numero or not contiene_caracter_especial:
+            errors.append("La contraseña debe contener al menos un número y caracter especial ('_', '-' o '@')")
 
         existe_usuario = Usuario.objects.filter(username=username).exists()
         if existe_usuario:
@@ -224,15 +237,21 @@ def registro_usuario(request):
         if existe_email:
             errors.append("Ya existe un usuario con ese email")
 
-            if len(errors) != 0:
-                return render(request, 'registro.html',
+        if len(errors) != 0:
+            return render(request, 'registro.html',
                               {"errores": errors, "username": username, "email": email, 'birthdate': birthdate})
         else:
             user = Usuario.objects.create(username=username, password=make_password(password), email=email,
                                           birthdate=birthdate)
             user.save()
 
-            return redirect('do_login')
+            subject = "Bienvenido a XtremeSoft"
+            mensaje = f"Estimado/a {username}: \n \n Desde ya puedes disfrutar de la experiencia XtremeSoft \n Echa un ojo a nuestros productos y no dudes en acudir a nuestros eventos \n \n  Un saludo del equipo de XtremeSoft"
+            from_email = settings.EMAIL_HOST_USER
+            enviar_a = [email]
+            send_mail(subject, mensaje, from_email, enviar_a)
+            messages.info(request, "Cuenta creada correctamente. Corre a tu email. Hay un mensaje esperándote")
+            return redirect('registro_usuario')
 
 
 def do_login(request):
@@ -463,9 +482,9 @@ def ir_a_perfil_usuario(request):
 
 
 def reservar_evento(request, id):
+    evento = Evento.objects.get(id=id)
     if request.method == 'GET':
-        evento = Evento.objects.get(id=id)
-        tramos = Tramo_reserva.values
+        tramos = Tramo_reserva
         campos = Campo_Tiro.objects.all()
         precio_evento = evento.precio
         fecha_evento = evento.fecha
@@ -482,9 +501,9 @@ def reservar_evento(request, id):
             return redirect(reverse('reservar_evento', args=[id]))
 
         reserva_evento = Reserva()
-        reserva_evento.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
+        reserva_evento.tramo_horario = request.POST.get("tramo_reserva")
         reserva_evento.evento_id = id
-        reserva_evento.precio_reserva = request.POST.get('precio_reserva')
+        reserva_evento.precio_reserva = evento.precio
         reserva_evento.jugador = request.user
         reserva_evento.fecha = request.POST.get('fecha_reserva')
 
@@ -523,11 +542,17 @@ def reservar_campo(request, id):
             return redirect(reverse('reservar_evento', args=[id]))
 
         reserva_campo = Reserva()
-        reserva_campo.tramo_horario = int(Tramo_reserva.choices[int(request.POST.get("tramo_reserva")) - 1][0])
+        reserva_campo.tramo_horario = request.POST.get("tramo_reserva")
         campo = Campo_Tiro.objects.get(id=id)
         reserva_campo.campo_tiro_id = campo.id
+        reserva_campo.precio_campo = campo.precio
         reserva_campo.jugador = request.user
         reserva_campo.fecha = request.POST.get('fecha_reserva')
+        s = reserva_campo.fecha
+        s =datetime.strptime(s, "%Y-%m-%d").date()
+        if s < date.today():
+            messages.success(request, "Fecha incorrecta. La fecha es anterior a la fecha actual")
+
         reserva_campo.num_jugadores = int(request.POST.get('num_jugadores'))
 
         campo = Campo_Tiro.objects.get(id=id)
@@ -559,3 +584,4 @@ def reservar_campo(request, id):
         reserva_campo.save()
 
         return redirect('/')
+

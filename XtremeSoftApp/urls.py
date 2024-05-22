@@ -51,7 +51,8 @@ urlpatterns = [
     path('perfil_usuario', ir_a_perfil_usuario, name="ir_a_perfil_usuario"),
 
     path('reservar/evento/<int:id>', reservar_evento, name="reservar_evento"),
-    path('reservar/campo/<int:id>', reservar_campo, name="reservar_campo")
+    path('reservar/campo/<int:id>', reservar_campo, name="reservar_campo"),
+
 
 
 

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import UserManager
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
@@ -107,9 +108,9 @@ class Empleado(models.Model):
 
 
 class Tramo_reserva(models.TextChoices):
-    T1 = 1
-    T2 = 2
-    T3 = 3
+    T1 = "1: 12pm - 14pm"
+    T2 = "2: 16pm - 18pm"
+    T3 = "3: 18pm - 20pm"
 
 
 class Evento(models.Model):
@@ -128,7 +129,7 @@ class Evento(models.Model):
 
 class Reserva(models.Model):
     id = models.AutoField(primary_key=True)
-    tramo_horario = models.IntegerField(null=False, choices=Tramo_reserva.choices)
+    tramo_horario = models.TextField(null=False, choices=Tramo_reserva.choices, max_length=100)
     fecha = models.DateField(null=False)
     num_jugadores = models.IntegerField(null=False)
     precio_reserva = models.FloatField(null=False)
